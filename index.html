@@ -429,6 +429,24 @@
   }
   window.addEventListener('load', sendHeight);
   window.addEventListener('resize', sendHeight);
+
+// This script runs as soon as the page loads
+  const urlParams = new URLSearchParams(window.location.search);
+  const viewType = urlParams.get('view');
+
+  const noticeElement = document.getElementById('registration-notice');
+  const buttonsElement = document.getElementById('registration-buttons');
+
+  if (viewType === 'buttons') {
+    // If URL has ?view=buttons, show buttons and hide notice
+    buttonsElement.style.display = 'flex';
+    noticeElement.style.display = 'none';
+  } else {
+    // Otherwise, show the notice and hide buttons
+    noticeElement.style.display = 'block';
+    buttonsElement.style.display = 'none';
+  }
+  
 </script>
 
 </body>
