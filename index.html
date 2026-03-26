@@ -7,6 +7,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
+
+  /* Hide both by default to prevent flickering */
+  #registration-notice, #registration-buttons { display: none; }
+  
   :root {
     --scarlet: #ce1126;
     --scarlet-accessible: #ff5252;
@@ -184,18 +188,19 @@
     <p class="hero-eyebrow">62nd Grand Council Convention</p>
     <div class="greek-letters">ΚΨ</div>
     <h1 class="hero-title"><em>Powered by</em> Purpose</h1>
-    <div style="margin-top: 20px; padding: 15px; border: 1px solid var(--scarlet-accessible); background: rgba(206, 17, 38, 0.1); border-radius: 4px;">
+
+    <div id="registration-notice" style="margin-top: 20px; padding: 15px; border: 1px solid var(--scarlet-accessible); background: rgba(206, 17, 38, 0.1); border-radius: 4px;">
       <p style="font-size: 18px; font-weight: 600; color: var(--white); letter-spacing: 0.05em;">
-      READY TO REGISTER?
+        READY TO REGISTER?
       </p>
       <p style="font-size: 16px; color: var(--white); opacity: 0.9;">
-      Please use the registration buttons located directly <strong>above</strong> this window.
+        Please use the registration buttons located directly <strong>above</strong> this window.
       </p>
     </div>
-    <!--<div class="hero-cta-group">
-      <a href="https://kappapsi.my.salesforce-sites.com/pmtx/evt__conf_reg?id=a2QQh000001vaCf&fn={{ current_user.csp__preferred_first_name__c }}&ln={{ current_user.lastname }}&email={{ current_user.email }}&addr={{current_user.csp__mailing_street_line_1__c}}{{current_user.csp__mailing_street_line_2__c}}&city={{current_user.mailingcity}}&state={{current_user.mailingstatecode}}&zip={{current_user.mailingpostalcode}}&cntry={{current_user.mailingcountrycode}}" class="hero-cta">Collegiate Registration</a>
-      <a href="https://kappapsi.my.salesforce-sites.com/pmtx/evt__conf_reg?id=a2QQh0000022eEjMAI&lang=en_US" class="hero-cta">Graduate Registration</a>
-    </div>-->
+
+    <div id="registration-buttons" class="hero-cta-group">
+      <a href="https://portal.kappapsi.org" class="hero-cta">Register in the Portal</a>
+    </div>
   </div>
 </section>
 
