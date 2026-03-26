@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kappa Psi · Guide to the 62nd GCC · Volume 2</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+/* ─── DESIGN TOKENS ──────────────────────────────────────────────────────── */
+:root {
+  --red:        #7A1515; /* 10.79:1 on white ✅ AAA */
+  --red-light:  #FAF0F0;
+  --charcoal:   #2C2C2E; /* 13.94:1 on white ✅ AAA */
+  --ink:        #1C1C1E; /* 17.01:1 on white ✅ AAA */
+  --gray:       #505050; /*  8.06:1 on white ✅ AAA */
+  --gold:       #B8922A; /* decorative on dark only  */
+  --off-white:  #F8F6F3;
+  --cream:      #EEE9E2;
+  --border:     #767676; /*  4.54:1 on white ✅ WCAG 1.4.11 */
+  --white:      #ffffff;
+
+  --page-w: 816px;   /* ~8.5in at 96dpi */
+  --margin: 64px;
+
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'Source Sans 3', 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* ─── RESET ──────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  color: var(--ink);
+  background: #D0C8BC;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── PAGE SHELL ─────────────────────────────────────────────────────────── */
+.page {
+  width: var(--page-w);
+  margin: 32px auto;
+  background: var(--white);
+  box-shadow: 0 4px 40px rgba(0,0,0,0.18);
+  position: relative;
+}
+
+/* ─── RUNNING HEADER (every section) ────────────────────────────────────── */
+.page-header {
+  background: var(--charcoal);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px var(--margin);
+  border-bottom: 3px solid var(--gold);
+}
+.page-header .brand {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+.page-header .event {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-style: italic;
+  color: var(--gold);
+  letter-spacing: 0.04em;
+}
+
+/* ─── RUNNING FOOTER ─────────────────────────────────────────────────────── */
+.page-footer {
+  background: var(--charcoal);
+  border-top: 3px solid var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px var(--margin);
+}
+.page-footer .location {
+  font-size: 10px;
+  color: var(--gold);
+  font-style: italic;
+  letter-spacing: 0.03em;
+}
+.page-footer .vol {
+  font-size: 10px;
+  color: rgba(255,255,255,0.65);
+  letter-spacing: 0.04em;
+}
+
+/* ─── CONTENT BODY ───────────────────────────────────────────────────────── */
+.content {
+  padding: 52px var(--margin) 48px;
+}
+
+/* ─── COVER ──────────────────────────────────────────────────────────────── */
+.cover {
+  padding: 64px var(--margin) 56px;
+  text-align: center;
+}
+.cover-eyebrow {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 20px;
+}
+.cover-title {
+  font-family: var(--font-display);
+  font-size: 48px;
+  font-weight: 900;
+  line-height: 1.1;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.cover-title sup {
+  font-size: 0.45em;
+  vertical-align: super;
+  line-height: 0;
+  font-weight: 700;
+  color: var(--red);
+}
+.cover-rule {
+  width: 80px;
+  height: 4px;
+  background: var(--red);
+  margin: 24px auto 24px;
+  border-radius: 2px;
+}
+.cover-venue {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.cover-dates {
+  font-size: 14px;
+  color: var(--gray);
+  margin-bottom: 6px;
+}
+.cover-vol {
+  font-size: 12px;
+  color: var(--gray);
+  font-style: italic;
+}
+
+/* ─── TOC ────────────────────────────────────────────────────────────────── */
+.toc {
+  margin-top: 40px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.toc-head {
+  background: var(--red);
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  padding: 14px 20px;
+  letter-spacing: 0.04em;
+}
+.toc-item {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 11px 20px;
+  border-top: 1px solid var(--cream);
+  font-size: 13px;
+  color: var(--white);
+  background: var(--charcoal);
+  transition: background 0.15s;
+}
+.toc-item:nth-child(odd) { background: #242426; }
+.toc-num {
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--gold);
+  /* gold on #242426 = 5.14:1 ✅ AA  |  gold on charcoal = 4.77:1 ✅ AA */
+  min-width: 32px;
+  flex-shrink: 0;
+}
+.toc-label { color: var(--white); }
+
+/* ─── SECTION DIVIDER (between pages) ───────────────────────────────────── */
+.section-break {
+  border: none;
+  border-top: 1px dashed var(--border);
+  margin: 0;
+  opacity: 0.4;
+}
+
+/* ─── SECTION HEADER ─────────────────────────────────────────────────────── */
+.section-header {
+  margin-bottom: 28px;
+}
+.section-pill {
+  display: inline-block;
+  background: var(--red);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 100px;
+  margin-bottom: 10px;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+.section-rule {
+  height: 2px;
+  background: var(--red);
+  border: none;
+  border-radius: 1px;
+}
+
+/* ─── TYPOGRAPHY ─────────────────────────────────────────────────────────── */
+p {
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--ink);
+  margin-bottom: 14px;
+}
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+sup {
+  font-size: 0.55em;
+  vertical-align: super;
+  line-height: 0;
+}
+
+/* ─── SIGNATURE CARD ─────────────────────────────────────────────────────── */
+.sig-card {
+  background: var(--off-white);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--red);
+  padding: 16px 20px;
+  margin-top: 24px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.sig-card .name { font-weight: 700; font-size: 14px; margin-bottom: 2px; }
+.sig-card .title-line { color: var(--gray); }
+.sig-card .email { color: var(--gray); font-style: italic; font-size: 12px; }
+
+/* ─── DATA TABLE ─────────────────────────────────────────────────────────── */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+.data-table thead tr {
+  background: var(--charcoal);
+  color: var(--white);
+  border-bottom: 2px solid var(--red);
+}
+.data-table thead th {
+  padding: 11px 14px;
+  font-weight: 700;
+  text-align: left;
+  font-size: 12.5px;
+  letter-spacing: 0.02em;
+}
+.data-table thead th.center { text-align: center; }
+.data-table tbody tr:nth-child(even) { background: var(--off-white); }
+.data-table tbody tr:nth-child(odd)  { background: var(--white); }
+.data-table tbody td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--cream);
+  vertical-align: middle;
+}
+.data-table tbody td.center { text-align: center; }
+.data-table tbody td.price {
+  text-align: center;
+  font-weight: 700;
+  color: var(--red);
+  font-size: 14px;
+}
+.data-table tbody td.price-late {
+  text-align: center;
+  color: var(--ink);
+  font-size: 13px;
+}
+
+/* ─── CALLOUT BOX ────────────────────────────────────────────────────────── */
+.callout {
+  background: var(--red-light);
+  border: 2px solid var(--red);
+  padding: 18px 22px;
+  margin: 20px 0;
+  font-size: 13.5px;
+  line-height: 1.7;
+  text-align: center;
+}
+
+/* ─── NEARBY LIST ────────────────────────────────────────────────────────── */
+.nearby-list {
+  list-style: none;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  margin-top: 12px;
+}
+.nearby-list li {
+  padding: 10px 18px;
+  font-size: 13px;
+  border-bottom: 1px solid var(--cream);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+}
+.nearby-list li:last-child { border-bottom: none; }
+.nearby-list li:nth-child(odd)  { background: var(--off-white); }
+.nearby-list li:nth-child(even) { background: var(--white); }
+.nearby-list li::before {
+  content: '→';
+  color: var(--red);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ─── BULLET LIST ────────────────────────────────────────────────────────── */
+.bullet-list {
+  list-style: none;
+  margin: 16px 0;
+}
+.bullet-list li {
+  padding: 8px 0 8px 22px;
+  font-size: 13.5px;
+  line-height: 1.65;
+  border-bottom: 1px solid var(--cream);
+  position: relative;
+  color: var(--ink);
+}
+.bullet-list li:last-child { border-bottom: none; }
+.bullet-list li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--red);
+  font-weight: 700;
+}
+
+/* ─── SPONSOR GRID ───────────────────────────────────────────────────────── */
+.sponsor-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--border);
+  border-bottom: 2px solid var(--red);
+  border-top: 2px solid var(--red);
+  overflow: hidden;
+  margin: 20px 0;
+}
+.sponsor-grid-item {
+  padding: 14px 10px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 13px;
+  background: var(--cream);
+  border-right: 1px solid var(--border);
+  color: var(--ink);
+}
+.sponsor-grid-item:last-child { border-right: none; }
+
+/* ─── CTA BUTTON ─────────────────────────────────────────────────────────── */
+.cta-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 24px;
+}
+.cta-btn {
+  display: inline-block;
+  background: var(--red);
+  color: var(--white);
+  font-weight: 700;
+  font-size: 13px;
+  padding: 12px 32px;
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  min-width: 280px;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+}
+
+/* ─── SCHEDULE ───────────────────────────────────────────────────────────── */
+.schedule {
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.schedule-day {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  border-bottom: 1px solid var(--border);
+}
+.schedule-day:last-child { border-bottom: none; }
+.schedule-day-label {
+  background: var(--red);
+  color: var(--white);
+  font-weight: 700;
+  font-size: 12px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: flex-start;
+  line-height: 1.4;
+}
+.schedule-items {
+  padding: 0;
+  list-style: none;
+}
+.schedule-items li {
+  padding: 9px 16px;
+  font-size: 12.5px;
+  border-bottom: 1px solid var(--cream);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.schedule-items li:last-child { border-bottom: none; }
+.schedule-items li:nth-child(odd)  { background: var(--off-white); }
+.schedule-items li:nth-child(even) { background: var(--white); }
+.schedule-items li::before {
+  content: '·';
+  color: var(--red);
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 0;
+  flex-shrink: 0;
+}
+
+/* ─── COMING SOON CARDS ──────────────────────────────────────────────────── */
+.coming-soon {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 20px 0;
+}
+.coming-card {
+  background: var(--off-white);
+  border-left: 4px solid var(--red);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--red);
+  padding: 14px 18px;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.coming-card .icon {
+  font-size: 18px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+/* ─── ORG FOOTER ─────────────────────────────────────────────────────────── */
+.org-footer {
+  background: var(--off-white);
+  border: 1px solid var(--border);
+  text-align: center;
+  padding: 14px;
+  font-size: 11px;
+  color: var(--gray);
+  line-height: 1.7;
+  margin-top: 28px;
+}
+
+/* ─── UTILITY ────────────────────────────────────────────────────────────── */
+.mt-sm { margin-top: 10px; }
+.mt-md { margin-top: 20px; }
+.mt-lg { margin-top: 32px; }
+.mb-sm { margin-bottom: 10px; }
+.mb-md { margin-bottom: 20px; }
+.text-center { text-align: center; }
+.text-gray { color: var(--gray); }
+.caption {
+  font-size: 11.5px;
+  color: var(--gray);
+  font-style: italic;
+  text-align: center;
+  margin-top: 8px;
+}
+
+/* ─── PRINT ──────────────────────────────────────────────────────────────── */
+@media print {
+  body { background: white; }
+  .page {
+    width: 100%;
+    margin: 0;
+    box-shadow: none;
+    border-radius: 0;
+  }
+  .section-page { page-break-before: always; }
+  .section-page:first-of-type { page-break-before: avoid; }
+  .cover-page { page-break-after: always; }
+  a { color: inherit; text-decoration: none; }
+  .cta-btn { border: 1px solid var(--red); }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ═══════════════════════════════════════════════════════════
+       COVER PAGE
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="cover-page">
+    <header class="page-header">
+      <span class="brand">KΨ &nbsp;·&nbsp; Kappa Psi Pharmaceutical Fraternity, Inc.</span>
+      <span class="event">62nd Grand Council Convention</span>
+    </header>
+
+    <div class="cover">
+      <div class="cover-eyebrow">Volume 2 &nbsp;·&nbsp; March 12, 2026</div>
+      <h1 class="cover-title">
+        Kappa Psi's Guide<br>to the 62<sup>nd</sup> GCC
+      </h1>
+      <div class="cover-rule"></div>
+      <p class="cover-venue">Hyatt Regency &nbsp;·&nbsp; Dallas, TX</p>
+      <p class="cover-dates">July 29 – August 2, 2026</p>
+      <p class="cover-vol mt-sm"><em>Powered by Purpose</em></p>
+
+      <nav class="toc" aria-label="Table of Contents">
+        <div class="toc-head">Table of Contents</div>
+        <div class="toc-item"><span class="toc-num">I.</span>    <span class="toc-label">Greetings from the GCC Chair</span></div>
+        <div class="toc-item"><span class="toc-num">II.</span>   <span class="toc-label">Registration Pricing Information</span></div>
+        <div class="toc-item"><span class="toc-num">III.</span>  <span class="toc-label">GCC Hotel Room Pricing &amp; What's Nearby</span></div>
+        <div class="toc-item"><span class="toc-num">IV.</span>   <span class="toc-label">Collegiate Delegate Reimbursement</span></div>
+        <div class="toc-item"><span class="toc-num">V.</span>    <span class="toc-label">Sponsorship Information</span></div>
+        <div class="toc-item"><span class="toc-num">VI.</span>   <span class="toc-label">Schedule Overview</span></div>
+        <div class="toc-item"><span class="toc-num">VII.</span>  <span class="toc-label">Future GCC Updates</span></div>
+      </nav>
+    </div>
+
+    <footer class="page-footer">
+      <span class="location">Hyatt Regency Dallas &nbsp;·&nbsp; July 29 – August 2, 2026</span>
+      <span class="vol">Volume 2 &nbsp;·&nbsp; 2026</span>
+    </footer>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       I. GREETINGS
+  ═══════════════════════════════════════════════════════════ -->
+  <hr class="section-break">
+  <section class="section-page" aria-labelledby="sec1-title">
+    <header class="page-header">
+      <span class="brand">KΨ &nbsp;·&nbsp; Kappa Psi Pharmaceutical Fraternity, Inc.</span>
+      <span class="event">62nd Grand Council Convention</span>
+    </header>
+
+    <div class="content">
+      <div class="section-header">
+        <div class="section-pill">Section I</div>
+        <h2 class="section-title" id="sec1-title">Greetings from the Convention Chair</h2>
+        <hr class="section-rule">
+      </div>
+
+      <p><strong>Brothers,</strong></p>
+      <p>With March upon us, it's time to start planning your trip to Dallas! In this <em>Guide to GCC, Volume 2</em>, you'll find information to help craft a budget for you and fellow Chapter Members — including registration costs and the reimbursement rates equivalent to the flight cost for one delegate per Collegiate Chapter.</p>
+      <p>A big <em>Thank You</em> to everyone who submitted an entry to the GCC Logo Competition and the GCC Education Survey — we received an incredible number of responses! In the spirit of the 62<sup>nd</sup> GCC theme, <em>Powered by Purpose</em>, the GCC Planning Committee and many other Fraternity-wide committees are working to ensure our workshops, continuing education, and program speakers align with the needs of our Collegiate and Graduate Members.</p>
+      <p>Don't forget to check out the <a href="62nd GCC Guide VOL 1.pdf"><em>Guide to GCC – Volume 1</em></a> and our future communications. Be sure to share this information with your fellow Chapter Members.</p>
+
+      <div class="sig-card" role="complementary" aria-label="Letter signature">
+        <div class="name">Dr. Joe Nardolillo</div>
+        <div class="title-line">Grand Vice Regent &amp; GCC Chair</div>
+        <div class="email">grandviceregent@kappapsi.org</div>
+      </div>
+    </div>
+
+    <footer class="page-footer">
+      <span class="location">Hyatt Regency Dallas &nbsp;·&nbsp; July 29 – August 2, 2026</span>
+      <span class="vol">Volume 2 &nbsp;·&nbsp; 2026</span>
+    </footer>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       II. REGISTRATION
+  ═══════════════════════════════════════════════════════════ -->
+  <hr class="section-break">
+  <section class="section-page" aria-labelledby="sec2-title">
+    <header class="page-header">
+      <span class="brand">KΨ &nbsp;·&nbsp; Kappa Psi Pharmaceutical Fraternity, Inc.</span>
+      <span class="event">62nd Grand Council Convention</span>
+    </header>
+
+    <div class="content">
+      <div class="section-header">
+        <div class="section-pill">Section II</div>
+        <h2 class="section-title" id="sec2-title">Registration Pricing Information</h2>
+        <hr class="section-rule">
+      </div>
+
+      <p class="text-center" style="color:var(--red); font-weight:600; font-style:italic;">
+        62<sup>nd</sup> GCC Registration will be released within the coming weeks.
+      </p>
+      <p class="text-center mt-sm">All Collegiate and Graduate Members must register through the <strong>Kappa Psi Portal</strong>.</p>
+
+      <div class="mt-md">
+        <table class="data-table" role="table" aria-label="Registration pricing">
+          <thead>
+            <tr>
+              <th scope="col">Attendee Category</th>
+              <th scope="col" class="center">Early Registration<br><span style="font-weight:400; font-size:11px;">(through May 15)</span></th>
+              <th scope="col" class="center">Late Registration<br><span style="font-weight:400; font-size:11px;">(through June 25)</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Collegiate</td>
+              <td class="price">$395</td>
+              <td class="price-late">$425</td>
+            </tr>
+            <tr>
+              <td>Graduate</td>
+              <td class="price">$595</td>
+              <td class="price-late">$625</td>
+            </tr>
+            <tr>
+              <td>Guest (13 &amp; up)</td>
+              <td class="price">$395</td>
+              <td class="price-late">$425</td>
+            </tr>
+            <tr>
+              <td>Child (5–12)</td>
+              <td class="price">$175</td>
+              <td class="price-late">$195</td>
+            </tr>
+            <tr>
+              <td>Child (0–4)</td>
+              <td class="price">Free</td>
+              <td class="price-late">Free</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="caption">Additional details and GCC Registration link will be shared soon.</p>
+      </div>
+    </div>
+
+    <footer class="page-footer">
+      <span class="location">Hyatt Regency Dallas &nbsp;·&nbsp; July 29 – August 2, 2026</span>
+      <span class="vol">Volume 2 &nbsp;·&nbsp; 2026</span>
+    </footer>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       III. HOTEL
+  ═══════════════════════════════════════════════════════════ -->
+  <hr class="section-break">
+  <section class="section-page" aria-labelledby="sec3-title">
+    <header class="page-header">
+      <span class="brand">KΨ &nbsp;·&nbsp; Kappa Psi Pharmaceutical Fraternity, Inc.</span>
+      <span class="event">62nd Grand Council Convention</span>
+    </header>
+
+    <div class="content">
+      <div class="section-header">
+        <div class="section-pill">Section III</div>
+        <h2 class="section-title" id="sec3-title">GCC Hotel Room Pricing &amp; What's Nearby</h2>
+        <hr class="section-rule">
+      </div>
+
+      <p class="text-center"><strong>Hyatt Regency Dallas</strong></p>
+      <p class="text-center text-gray" style="font-size:13px; margin-top:2px;">300 Reunion Boulevard, Dallas, TX 75207</p>
+      <p class="text-center caption mt-sm"><em>Room block will become available when the GCC Registration Link is released in the coming weeks.</em></p>
+
+      <div class="mt-md">
+        <table class="data-table" role="table" aria-label="Hotel room rates">
+          <thead>
+            <tr>
+              <th scope="col">Occupancy</th>
+              <th scope="col" class="center">Nightly Rate</th>
+              <th scope="col" class="center">Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1–2 Guests</td>
+              <td class="price">$199.00</td>
+              <td class="center" style="font-size:12px; color:var(--gray);">+ tax</td>
+            </tr>
+            <tr>
+              <td>3 Guests</td>
+              <td class="price">$224.00</td>
+              <td class="center" style="font-size:12px; color:var(--gray);">+ tax</td>
+            </tr>
+            <tr>
+              <td>4 Guests</td>
+              <td class="price">$249.00</td>
+              <td class="center" style="font-size:12px; color:var(--gray);">+ tax</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mt-lg">
+        <h3 style="font-family:var(--font-display); font-size:18px; color:var(--ink); margin-bottom:10px;">What's Nearby</h3>
+        <hr class="section-rule" style="margin-bottom:0;">
+        <ul class="nearby-list" aria-label="Nearby attractions">
+          <li>Reunion Tower GeO-Deck &amp; Crown Block Restaurant</li>
+          <li>Klyde Warren Park</li>
+          <li>Dallas World Aquarium</li>
+          <li>Deep Ellum</li>
+          <li>The Sixth Floor Museum at Dealey Plaza</li>
+          <li>West End Historic District</li>
+        </ul>
+      </div>
+    </div>
+
+    <footer class="page-footer">
+      <span class="location">Hyatt Regency Dallas &nbsp;·&nbsp; July 29 – August 2, 2026</span>
+      <span class="vol">Volume 2 &nbsp;·&nbsp; 2026</span>
+    </footer>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       IV. REIMBURSEMENT
+  ═══════════════════════════════════════════════════════════ -->
+  <hr class="section-break">
+  <section class="section-page" aria-labelledby="sec4-title">
+    <header class="page-header">
+      <span class="brand">KΨ &nbsp;·&nbsp; Kappa Psi Pharmaceutical Fraternity, Inc.</span>
+      <span class="event">62nd Grand Council Convention</span>
+    </header>
+
+    <div class="content">
+      <div class="section-header">
+        <div class="section-pill">Section IV</div>
+        <h2 class="section-title" id="sec4-title">Collegiate Delegate Reimbursement</h2>
+        <hr class="section-rule">
+      </div>
+
+      <div class="callout" role="note">
+        The <strong>Grand Council Convention Fund</strong> covers roundtrip airfare for one official delegate from every Collegiate Chapter and designated national leaders.
+      </div>
+
+      <ul class="bullet-list" aria-label="Reimbursement details">
+        <li>Central Office provides reimbursement equivalent to the cost of a <strong>round-trip flight for one delegate per Collegiate Chapter</strong>.</li>
+        <li>Reimbursement rates for each Chapter are available in the Kappa Psi Portal.</li>
+        <li>Reimbursements are distributed via check to each Chapter near the end of GCC. Each Chapter may determine how these funds are spent.</li>
+        <li><em>Airport options: Dallas–Fort Worth (DFW) &amp; Dallas Love Field (DAL)</em></li>
+      </ul>
+
+      <p class="text-center mt-lg" style="font-family:var(--font-display); font-size:16px; color:var(--red); font-style:italic;">
+        62<sup>nd</sup> GCC &nbsp;·&nbsp; Powered by Purpose
+      </p>
+    </div>
+
+    <footer class="page-footer">
+      <span class="location">Hyatt Regency Dallas &nbsp;·&nbsp; July 29 – August 2, 2026</span>
+      <span class="vol">Volume 2 &nbsp;·&nbsp; 2026</span>
+    </footer>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       V. SPONSORSHIP
+  ═══════════════════════════════════════════════════════════ -->
+  <hr class="section-break">
+  <section class="section-page" aria-labelledby="sec5-title">
+    <header class="page-header">
+      <span class="brand">KΨ &nbsp;·&nbsp; Kappa Psi Pharmaceutical Fraternity, Inc.</span>
+      <span class="event">62nd Grand Council Convention</span>
+    </header>
+
+    <div class="content">
+      <div class="section-header">
+        <div class="section-pill">Section V</div>
+        <h2 class="section-title" id="sec5-title">Sponsorship Information</h2>
+        <hr class="section-rule">
+      </div>
+
+      <p class="text-center">Kappa Psi's 62<sup>nd</sup> GCC is supported through a <strong>tiered sponsorship program</strong> designed to enhance the experience of all Members.</p>
+
+      <div class="sponsor-grid mt-md" role="list" aria-label="Sponsor types">
+        <div class="sponsor-grid-item" role="listitem">Businesses</div>
+        <div class="sponsor-grid-item" role="listitem">Provinces</div>
+        <div class="sponsor-grid-item" role="listitem">Chapters</div>
+        <div class="sponsor-grid-item" role="listitem">Individuals</div>
+      </div>
+
+      <p class="text-center mt-md">At each donation threshold, sponsors receive <strong>increased recognition and visibility</strong> throughout GCC programs and events.</p>
+      <p class="text-center">We celebrate our sponsors for their support in ensuring this year's GCC is <strong><em>Powered by Purpose!</em></strong></p>
+
+      <div class="cta-wrap mt-lg">
+        <a href="#" class="cta-btn" role="button">Sponsorship Outreach Letter</a>
+        <a href="#" class="cta-btn" role="button">Sponsorship Inquiry Form</a>
+      </div>
+    </div>
+
+    <footer class="page-footer">
+      <span class="location">Hyatt Regency Dallas &nbsp;·&nbsp; July 29 – August 2, 2026</span>
+      <span class="vol">Volume 2 &nbsp;·&nbsp; 2026</span>
+    </footer>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       VI. SCHEDULE
+  ═══════════════════════════════════════════════════════════ -->
+  <hr class="section-break">
+  <section class="section-page" aria-labelledby="sec6-title">
+    <header class="page-header">
+      <span class="brand">KΨ &nbsp;·&nbsp; Kappa Psi Pharmaceutical Fraternity, Inc.</span>
+      <span class="event">62nd Grand Council Convention</span>
+    </header>
+
+    <div class="content">
+      <div class="section-header">
+        <div class="section-pill">Section VI</div>
+        <h2 class="section-title" id="sec6-title">Schedule Overview</h2>
+        <hr class="section-rule">
+      </div>
+
+      <p class="text-center text-gray mb-md"><em>The 62<sup>nd</sup> GCC brings Kappa Psi members and guests together for education, leadership development, fraternity business, and meaningful connection.</em></p>
+
+      <div class="schedule" role="list" aria-label="Event schedule">
+
+        <div class="schedule-day" role="listitem">
+          <div class="schedule-day-label">Wednesday<br>July 29</div>
+          <ul class="schedule-items">
+            <li>Arrive in Dallas</li>
+            <li>First Business Session</li>
+            <li>Opening Reception &amp; Social</li>
+          </ul>
+        </div>
+
+        <div class="schedule-day" role="listitem">
+          <div class="schedule-day-label">Thursday<br>July 30</div>
+          <ul class="schedule-items">
+            <li>Delegate Check-in</li>
+            <li>Guest Breakfast</li>
+            <li>Business Session</li>
+            <li>Continuing Education &amp; Workshops</li>
+            <li>Scholarship &amp; Awards Luncheon</li>
+            <li>Professional Headshots</li>
+            <li>Meet the Candidates</li>
+          </ul>
+        </div>
+
+        <div class="schedule-day" role="listitem">
+          <div class="schedule-day-label">Friday<br>July 31</div>
+          <ul class="schedule-items">
+            <li>Business Session</li>
+            <li>Leadership Workshops</li>
+            <li>CE Career Roundtables</li>
+            <li>Poster Sessions</li>
+            <li>Province Caucuses</li>
+            <li>Chapter Sales</li>
+          </ul>
+        </div>
+
+        <div class="schedule-day" role="listitem">
+          <div class="schedule-day-label">Saturday<br>August 1</div>
+          <ul class="schedule-items">
+            <li>Business Sessions</li>
+            <li>Continuing Education</li>
+            <li>Elections</li>
+            <li>Alpha Chapter Reception</li>
+            <li>Anniversary Banquet</li>
+            <li>Officer Installation</li>
+          </ul>
+        </div>
+
+        <div class="schedule-day" role="listitem">
+          <div class="schedule-day-label">Sunday<br>August 2</div>
+          <ul class="schedule-items">
+            <li>Explore Dallas</li>
+            <li>Travel Home</li>
+          </ul>
+        </div>
+
+      </div>
+      <p class="caption mt-sm">Complete schedule, session details, and additional information coming soon.</p>
+    </div>
+
+    <footer class="page-footer">
+      <span class="location">Hyatt Regency Dallas &nbsp;·&nbsp; July 29 – August 2, 2026</span>
+      <span class="vol">Volume 2 &nbsp;·&nbsp; 2026</span>
+    </footer>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       VII. FUTURE UPDATES
+  ═══════════════════════════════════════════════════════════ -->
+  <hr class="section-break">
+  <section class="section-page" aria-labelledby="sec7-title">
+    <header class="page-header">
+      <span class="brand">KΨ &nbsp;·&nbsp; Kappa Psi Pharmaceutical Fraternity, Inc.</span>
+      <span class="event">62nd Grand Council Convention</span>
+    </header>
+
+    <div class="content">
+      <div class="section-header">
+        <div class="section-pill">Section VII</div>
+        <h2 class="section-title" id="sec7-title">Future GCC Updates</h2>
+        <hr class="section-rule">
+      </div>
+
+      <p class="text-center" style="font-weight:700; color:var(--red); font-size:14px; margin-bottom:16px;">Coming Soon</p>
+
+      <div class="coming-soon" aria-label="Upcoming announcements">
+        <div class="coming-card"><span class="icon" aria-hidden="true">📋</span> Official Registration Form and Hotel Room Block Links</div>
+        <div class="coming-card"><span class="icon" aria-hidden="true">🗂</span> Poster Session Information</div>
+        <div class="coming-card"><span class="icon" aria-hidden="true">📌</span> More Detailed Planning Advice and Support</div>
+      </div>
+
+      <hr style="border:none; border-top:1px solid var(--border); margin:28px 0; opacity:0.5;">
+
+      <p class="text-center">All GCC information from this Guide will also be stored in the <strong>Kappa Psi Portal</strong>.</p>
+      <p class="text-center mt-sm">Questions? Contact <strong>GrandViceRegent@KappaPsi.org</strong></p>
+
+      <div class="org-footer" role="contentinfo">
+        © Kappa Psi Pharmaceutical Fraternity, Inc.<br>
+        8100 Penn Ave S, Suite 189 &nbsp;·&nbsp; Bloomington, MN 55431 &nbsp;·&nbsp; 952-255-6974
+      </div>
+    </div>
+
+    <footer class="page-footer">
+      <span class="location">Hyatt Regency Dallas &nbsp;·&nbsp; July 29 – August 2, 2026</span>
+      <span class="vol">Volume 2 &nbsp;·&nbsp; 2026</span>
+    </footer>
+  </section>
+
+</div><!-- /.page -->
+</body>
+</html>
