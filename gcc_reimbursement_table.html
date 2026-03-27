@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>62nd GCC — Collegiate Delegate Reimbursement</title>
+<style>
+  :root {
+    /* ── Kappa Psi brand palette ── */
+    --kp-red:      #B22234;   /* deep crimson red */
+    --kp-red-dk:   #8B1A27;   /* darker red for hover/active */
+    --kp-red-lt:   #F9E5E8;   /* very light red tint for backgrounds */
+    --kp-red-mid:  #D94455;   /* medium red for accents */
+
+    --kp-gray:     #4A4F55;   /* dark charcoal gray */
+    --kp-gray-dk:  #2C3035;   /* near-black gray for table header */
+    --kp-gray-md:  #6B7280;   /* medium gray for muted text */
+    --kp-gray-lt:  #F3F4F6;   /* light gray page background */
+    --kp-gray-bd:  #D1D5DB;   /* border gray */
+
+    --white:       #ffffff;
+    --text-dark:   #1A1C1E;   /* near-black for body text */
+    --text-body:   #374151;   /* comfortable reading gray */
+
+    /* Semantic aliases */
+    --primary:     var(--kp-red);
+    --primary-dk:  var(--kp-red-dk);
+    --primary-lt:  var(--kp-red-lt);
+    --border:      var(--kp-gray-bd);
+    --bg:          var(--kp-gray-lt);
+    --muted:       var(--kp-gray-md);
+    --slate:       var(--text-body);
+
+    /* Reimbursement level colors — accessible on white bg */
+    --reimb-high:  #B22234;   /* KP red — $500+ */
+    --reimb-mid:   #2C3035;   /* dark charcoal — mid-range */
+    --reimb-low:   #166534;   /* dark green — low/close */
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text-dark);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: linear-gradient(135deg, var(--kp-red-dk) 0%, var(--kp-red) 60%, var(--kp-red-mid) 100%);
+    color: white;
+    padding: 2.5rem 2rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+  }
+  header .inner { position: relative; max-width: 1200px; margin: 0 auto; }
+  header .badge {
+    display: inline-block;
+    background: rgba(255,255,255,.20);
+    border: 1px solid rgba(255,255,255,.35);
+    border-radius: 999px;
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: .3rem .85rem;
+    margin-bottom: .85rem;
+    color: #fff;
+  }
+  header h1 {
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: .4rem;
+    color: #fff;
+  }
+  header p.subtitle {
+    font-size: .9rem;
+    color: rgba(255,255,255,.88);
+    max-width: 680px;
+    line-height: 1.6;
+  }
+
+  /* ── OVERVIEW BANNER ── */
+  .overview-banner {
+    background: var(--white);
+    border-left: 4px solid var(--kp-red);
+    margin: 1.5rem auto;
+    max-width: 1200px;
+    padding: 1rem 1.25rem;
+    border-radius: 0 8px 8px 0;
+    font-size: .83rem;
+    color: var(--slate);
+    line-height: 1.65;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+  }
+  .overview-banner strong { color: var(--kp-red-dk); }
+
+  /* ── STATS STRIP ── */
+  .stats {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto 1.25rem;
+    padding: 0 1rem;
+  }
+  .stat-card {
+    flex: 1 1 140px;
+    background: var(--white);
+    border-radius: 12px;
+    padding: .9rem 1.1rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,.07);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--kp-red);
+  }
+  .stat-card .label { font-size: .7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin-bottom: .25rem; }
+  .stat-card .value { font-size: 1.5rem; font-weight: 800; color: var(--kp-red-dk); }
+  .stat-card .sub   { font-size: .72rem; color: var(--muted); margin-top: .1rem; }
+
+  /* ── CONTROLS ── */
+  .controls {
+    max-width: 1200px;
+    margin: 0 auto 1rem;
+    padding: 0 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75rem;
+    align-items: flex-end;
+  }
+  .control-group { display: flex; flex-direction: column; gap: .3rem; flex: 1 1 200px; }
+  .control-group label { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--kp-gray); }
+
+  input[type="text"], select {
+    padding: .55rem .85rem;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: .9rem;
+    color: var(--text-dark);
+    background: var(--white);
+    outline: none;
+    transition: border-color .18s, box-shadow .18s;
+    width: 100%;
+  }
+  input[type="text"]:focus, select:focus {
+    border-color: var(--kp-red);
+    box-shadow: 0 0 0 3px rgba(178,34,52,.13);
+  }
+
+  .range-row { display: flex; gap: .5rem; align-items: center; }
+  .range-row input { flex: 1; }
+  .range-row span { font-size: .82rem; color: var(--muted); white-space: nowrap; }
+
+  .btn-reset {
+    padding: .55rem 1.1rem;
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: .85rem;
+    font-weight: 600;
+    color: var(--kp-gray);
+    cursor: pointer;
+    transition: all .15s;
+    white-space: nowrap;
+    align-self: flex-end;
+  }
+  .btn-reset:hover {
+    border-color: var(--kp-red);
+    color: var(--kp-red-dk);
+    background: var(--kp-red-lt);
+  }
+
+  /* ── RESULT COUNT ── */
+  .result-info {
+    max-width: 1200px;
+    margin: 0 auto .6rem;
+    padding: 0 1rem;
+    font-size: .82rem;
+    color: var(--muted);
+  }
+  .result-info strong { color: var(--kp-red-dk); }
+
+  /* ── TABLE WRAPPER ── */
+  .table-wrap {
+    max-width: 1200px;
+    margin: 0 auto 2rem;
+    padding: 0 1rem;
+    overflow-x: auto;
+    border-radius: 14px;
+    box-shadow: 0 2px 16px rgba(0,0,0,.09);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--white);
+    border-radius: 14px;
+    overflow: hidden;
+    font-size: .875rem;
+  }
+
+  thead th {
+    background: var(--kp-gray-dk);
+    color: #ffffff;
+    padding: .85rem 1rem;
+    text-align: left;
+    font-weight: 700;
+    font-size: .78rem;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    transition: background .15s;
+  }
+  thead th:hover { background: #3d4348; }
+  thead th .th-inner { display: flex; align-items: center; gap: .4rem; }
+  thead th .sort-icon { opacity: .5; font-size: .9rem; }
+  thead th.sorted-asc  .sort-icon::after { content: '↑'; opacity: 1; color: #ffcdd2; }
+  thead th.sorted-desc .sort-icon::after { content: '↓'; opacity: 1; color: #ffcdd2; }
+  thead th:not(.sorted-asc):not(.sorted-desc) .sort-icon::after { content: '↕'; }
+
+  /* Red accent stripe on sorted column header */
+  thead th.sorted-asc,
+  thead th.sorted-desc { background: var(--kp-red-dk); }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background .12s;
+  }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--kp-red-lt); }
+
+  td { padding: .8rem 1rem; vertical-align: middle; }
+
+  td.chapter { font-weight: 700; color: var(--kp-red-dk); min-width: 130px; }
+  td.school   { color: var(--text-body); min-width: 240px; }
+  td.city     { color: var(--muted); white-space: nowrap; }
+  td.airport  { white-space: nowrap; }
+
+  .airport-badge {
+    display: inline-block;
+    background: #E5E7EB;
+    color: var(--kp-gray-dk);
+    font-weight: 700;
+    font-size: .72rem;
+    padding: .2rem .55rem;
+    border-radius: 999px;
+    letter-spacing: .04em;
+    border: 1px solid var(--border);
+  }
+
+  td.reimb { font-weight: 800; font-size: 1rem; white-space: nowrap; }
+  .reimb-high { color: var(--reimb-high); }       /* KP red — high amounts */
+  .reimb-mid  { color: var(--reimb-mid); }         /* charcoal — mid amounts */
+  .reimb-low  { color: var(--reimb-low); }         /* dark green — low amounts */
+  .reimb-zero { color: var(--muted); font-style: italic; font-weight: 500; font-size: .85rem; }
+
+  .comment-pill {
+    display: inline-block;
+    background: #FEF9C3;
+    color: #78350F;
+    font-size: .72rem;
+    padding: .2rem .6rem;
+    border-radius: 6px;
+    border: 1px solid #FCD34D;
+  }
+
+  /* ── NO RESULTS ── */
+  .no-results {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--muted);
+  }
+  .no-results .icon { font-size: 2.5rem; margin-bottom: .5rem; }
+  .no-results p { font-size: .9rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    max-width: 1200px;
+    margin: 0 auto 2rem;
+    padding: 1rem 1.25rem;
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--kp-gray-dk);
+    margin-left: 1rem; margin-right: 1rem;
+  }
+  @media (min-width: 1240px) { footer { margin-left: auto; margin-right: auto; } }
+  footer h3 { font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--kp-gray); margin-bottom: .5rem; }
+  footer p  { font-size: .8rem; color: var(--slate); line-height: 1.65; margin-bottom: .75rem; }
+  footer p:last-child { margin-bottom: 0; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="inner">
+    <div class="badge">Kappa Psi Pharmaceutical Fraternity</div>
+    <h1>62nd Grand Council Convention<br>Collegiate Delegate Reimbursement</h1>
+    <p class="subtitle">Round-trip airfare reimbursement from Central Office — one delegate per Collegiate Chapter attending the 62nd GCC in Dallas, TX.</p>
+  </div>
+</header>
+
+<div class="overview-banner">
+  <strong>Overview:</strong> The amount listed for each Chapter represents the total reimbursement for which that Chapter is eligible to receive from Central Office. This amount reflects the cost of round-trip airfare for <strong>one delegate</strong> traveling from the Chapter's location to the 62nd Grand Council Convention. Each Chapter is eligible for reimbursement for <strong>one delegate only</strong>, regardless of the number of delegates or alternate delegates attending. Reimbursement is available only to Chapters whose delegate(s) are physically present at and attend the 62nd GCC. <strong>Chapters that vote by proxy are not eligible for reimbursement.</strong>
+</div>
+
+<div class="stats" id="statsStrip">
+  <div class="stat-card">
+    <div class="label">Total Chapters</div>
+    <div class="value" id="statTotal">—</div>
+    <div class="sub">collegiate chapters</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">Showing</div>
+    <div class="value" id="statShowing">—</div>
+    <div class="sub">after filters</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">Avg Reimbursement</div>
+    <div class="value" id="statAvg">—</div>
+    <div class="sub">per visible chapter</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">Total Eligible</div>
+    <div class="value" id="statSum">—</div>
+    <div class="sub">visible chapters</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">Highest</div>
+    <div class="value" id="statMax">—</div>
+    <div class="sub">max reimbursement</div>
+  </div>
+</div>
+
+<div class="controls">
+  <div class="control-group" style="flex: 2 1 280px;">
+    <label>Search</label>
+    <input type="text" id="searchInput" placeholder="Chapter, school, city, or airport…" />
+  </div>
+  <div class="control-group">
+    <label>State / Province</label>
+    <select id="stateFilter"><option value="">All locations</option></select>
+  </div>
+  <div class="control-group">
+    <label>Reimbursement range</label>
+    <div class="range-row">
+      <input type="text" id="minAmt" placeholder="Min $" style="max-width:90px;" />
+      <span>to</span>
+      <input type="text" id="maxAmt" placeholder="Max $" style="max-width:90px;" />
+    </div>
+  </div>
+  <div class="control-group">
+    <label>Sort by</label>
+    <select id="sortSelect">
+      <option value="">— table header click —</option>
+      <option value="chapter-asc">Chapter A→Z</option>
+      <option value="chapter-desc">Chapter Z→A</option>
+      <option value="reimb-asc">Reimbursement Low→High</option>
+      <option value="reimb-desc">Reimbursement High→Low</option>
+      <option value="school-asc">School A→Z</option>
+    </select>
+  </div>
+  <button class="btn-reset" onclick="resetFilters()">↺ Reset</button>
+</div>
+
+<div class="result-info" id="resultInfo"></div>
+
+<div class="table-wrap">
+  <table id="mainTable">
+    <thead>
+      <tr>
+        <th data-col="chapter" class="sorted-asc"><div class="th-inner">Chapter <span class="sort-icon"></span></div></th>
+        <th data-col="school"><div class="th-inner">School / College of Pharmacy <span class="sort-icon"></span></div></th>
+        <th data-col="city"><div class="th-inner">City, State <span class="sort-icon"></span></div></th>
+        <th data-col="airport"><div class="th-inner">Airport <span class="sort-icon"></span></div></th>
+        <th data-col="reimb"><div class="th-inner">Reimbursement <span class="sort-icon"></span></div></th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+</div>
+
+<footer>
+  <h3>Guiding Language — Kappa Psi Constitution &amp; By-Laws</h3>
+  <p><strong>By-Law VI, Sec 1</strong> outlines the purpose of the Grand Council Convention Fund: <em>"The Grand Council Convention Fund shall be used to pay the transportation expenses equivalent to the lowest tourist class, round trip air fare from the Chapter location to the airport of the convention site for one (1) Delegate (not a proxy) from each Collegiate Chapter, each Member of the Executive Committee, and such other Members of the Grand Council designated by the Executive Committee. Any monies remaining in this fund following the determination of anticipated transportation expenses may be utilized to fund other portions of the Grand Council Convention."</em></p>
+  <h3 style="margin-top:.75rem;">Methods</h3>
+  <p>Reimbursement amounts were estimated using Google Flights to identify round-trip airfare to Dallas, Texas, through either Dallas/Fort Worth International Airport (DFW) or Dallas Love Field (DAL). Flight searches assumed arrival by 4:00 PM on Wednesday, July 29, and departure at any time on Sunday, August 2. All available airlines were considered except Spirit and Frontier. Itineraries using different airlines for outbound and return travel were permitted. Consistent with By-Law VI, the reimbursement calculation for each Chapter was based on airfare from the airport closest to that Chapter's School or College of Pharmacy.</p>
+</footer>
+
+<script>
+const RAW_DATA = [
+  {"chapter":"Epsilon","school":"University of Minnesota Twin Cities","city_state":"Minneapolis, MN","airport":"MSP","reimbursement":397,"comments":""},
+  {"chapter":"Theta","school":"Virginia Commonwealth University","city_state":"Richmond, VA","airport":"RIC","reimbursement":376,"comments":""},
+  {"chapter":"Xi","school":"The Ohio State University","city_state":"Columbus, OH","airport":"CMH","reimbursement":404,"comments":""},
+  {"chapter":"Pi","school":"Purdue University","city_state":"West Lafayette, IN","airport":"IND","reimbursement":318,"comments":""},
+  {"chapter":"Rho","school":"University of Kansas","city_state":"Lawrence, KS","airport":"MCI","reimbursement":319,"comments":""},
+  {"chapter":"Sigma","school":"University of Maryland","city_state":"Baltimore, MD","airport":"BWI","reimbursement":369,"comments":""},
+  {"chapter":"Upsilon","school":"University of Kentucky","city_state":"Lexington, KY","airport":"LEX","reimbursement":593,"comments":""},
+  {"chapter":"Chi","school":"University of Illinois at Chicago","city_state":"Chicago, IL","airport":"MDW","reimbursement":225,"comments":""},
+  {"chapter":"Psi","school":"University of Tennessee","city_state":"Memphis, TN","airport":"MEM","reimbursement":289,"comments":""},
+  {"chapter":"Beta Gamma","school":"University of California San Francisco","city_state":"San Francisco, CA","airport":"SFO","reimbursement":350,"comments":""},
+  {"chapter":"Beta Epsilon","school":"University of Rhode Island","city_state":"Kingston, RI","airport":"PVD","reimbursement":397,"comments":""},
+  {"chapter":"Beta Eta","school":"University of West Virginia","city_state":"Morgantown, WV","airport":"MGW","reimbursement":280,"comments":""},
+  {"chapter":"Beta Kappa","school":"University of Pittsburgh","city_state":"Pittsburgh, PA","airport":"PIT","reimbursement":358,"comments":""},
+  {"chapter":"Beta Lambda","school":"University of Toledo","city_state":"Toledo, OH","airport":"TOL","reimbursement":393,"comments":""},
+  {"chapter":"Beta Nu","school":"Creighton University","city_state":"Omaha, NE","airport":"OMA","reimbursement":340,"comments":""},
+  {"chapter":"Beta Xi","school":"University of North Carolina","city_state":"Chapel Hill, NC","airport":"RDU","reimbursement":362,"comments":""},
+  {"chapter":"Beta Omicron","school":"University of Washington","city_state":"Seattle, WA","airport":"SEA","reimbursement":330,"comments":""},
+  {"chapter":"Beta Pi","school":"Washington State University","city_state":"Pullman, WA","airport":"GEG","reimbursement":442,"comments":""},
+  {"chapter":"Beta Rho","school":"University of Mississippi","city_state":"University, MS","airport":"MEM","reimbursement":295,"comments":""},
+  {"chapter":"Beta Sigma","school":"North Dakota State University","city_state":"Fargo, ND","airport":"FAR","reimbursement":400,"comments":""},
+  {"chapter":"Beta Upsilon","school":"Butler University","city_state":"Indianapolis, IN","airport":"IND","reimbursement":318,"comments":""},
+  {"chapter":"Beta Phi","school":"University of Cincinnati","city_state":"Cincinnati, OH","airport":"CVG","reimbursement":425,"comments":""},
+  {"chapter":"Beta Chi","school":"Drake University","city_state":"Des Moines, IA","airport":"DSM","reimbursement":403,"comments":""},
+  {"chapter":"Beta Psi","school":"University of Wisconsin Madison","city_state":"Madison, WI","airport":"MSN","reimbursement":385,"comments":""},
+  {"chapter":"Beta Omega","school":"Temple University","city_state":"Philadelphia, PA","airport":"PHL","reimbursement":410,"comments":""},
+  {"chapter":"Gamma Delta","school":"Ohio Northern University","city_state":"Ada, OH","airport":"CMH","reimbursement":399,"comments":""},
+  {"chapter":"Gamma Epsilon","school":"University of Nebraska","city_state":"Omaha, NE","airport":"OMA","reimbursement":340,"comments":""},
+  {"chapter":"Gamma Zeta","school":"Samford University","city_state":"Birmingham, AL","airport":"BHM","reimbursement":369,"comments":""},
+  {"chapter":"Gamma Eta","school":"University of Montana","city_state":"Missoula, MT","airport":"MSO","reimbursement":426,"comments":""},
+  {"chapter":"Gamma Theta","school":"University of Missouri Kansas City","city_state":"Kansas City, MO","airport":"MCI","reimbursement":299,"comments":""},
+  {"chapter":"Gamma Kappa","school":"South Dakota State University","city_state":"Brookings, SD","airport":"FSD","reimbursement":361,"comments":""},
+  {"chapter":"Gamma Lambda","school":"Northeastern University","city_state":"Boston, MA","airport":"BOS","reimbursement":388,"comments":""},
+  {"chapter":"Gamma Nu","school":"University of the Pacific","city_state":"Stockton, CA","airport":"SMF","reimbursement":370,"comments":""},
+  {"chapter":"Gamma Xi","school":"South Carolina College of Pharmacy","city_state":"Columbia, SC","airport":"CAE","reimbursement":374,"comments":""},
+  {"chapter":"Gamma Omicron","school":"University of Oklahoma HS Center","city_state":"Oklahoma City, OK","airport":"OKC","reimbursement":239,"comments":""},
+  {"chapter":"Gamma Pi","school":"Univeristy of Health Sciences & Pharmacy in St. Louis","city_state":"Saint Louis, MO","airport":"STL","reimbursement":295,"comments":""},
+  {"chapter":"Gamma Rho","school":"University of New Mexico","city_state":"Albuquerque, NM","airport":"ABQ","reimbursement":319,"comments":""},
+  {"chapter":"Gamma Sigma","school":"University of Florida","city_state":"Gainesville, FL","airport":"GNV","reimbursement":371,"comments":""},
+  {"chapter":"Gamma Upsilon","school":"University of Arizona","city_state":"Tucson, AZ","airport":"TUS","reimbursement":363,"comments":""},
+  {"chapter":"Gamma Phi","school":"University of Georgia","city_state":"Athens, GA","airport":"ATL","reimbursement":331,"comments":""},
+  {"chapter":"Gamma Chi","school":"Ferris State University","city_state":"Big Rapids, MI","airport":"GRR","reimbursement":376,"comments":""},
+  {"chapter":"Gamma Psi","school":"Mercer University","city_state":"Atlanta, GA","airport":"ATL","reimbursement":331,"comments":""},
+  {"chapter":"Gamma Omega","school":"University of Arkansas for Medical Sciences","city_state":"Little Rock, AR","airport":"LIT","reimbursement":289,"comments":""},
+  {"chapter":"Delta Gamma","school":"Auburn University","city_state":"Auburn, AL","airport":"CSG","reimbursement":331,"comments":""},
+  {"chapter":"Delta Delta","school":"University of Houston","city_state":"Houston, TX","airport":"HOU, IAH","reimbursement":289,"comments":""},
+  {"chapter":"Delta Epsilon","school":"Duquesne University","city_state":"Pittsburgh, PA","airport":"PIT","reimbursement":286,"comments":""},
+  {"chapter":"Delta Zeta","school":"University of Iowa","city_state":"Iowa City, IA","airport":"CID","reimbursement":446,"comments":""},
+  {"chapter":"Delta Eta","school":"Xavier University","city_state":"New Orleans, LA","airport":"MSY","reimbursement":258,"comments":""},
+  {"chapter":"Delta Theta","school":"Texas Southern University","city_state":"Houston, TX","airport":"HOU, IAH","reimbursement":289,"comments":""},
+  {"chapter":"Delta Lambda","school":"Campbell University","city_state":"Buies Creek, NC","airport":"RDU","reimbursement":367,"comments":""},
+  {"chapter":"Delta Mu","school":"University of British Columbia","city_state":"Vancouver, BC","airport":"YVR","reimbursement":540,"comments":""},
+  {"chapter":"Delta Nu","school":"Midwestern University","city_state":"Downers Grove, IL","airport":"ORD/MDW","reimbursement":225,"comments":""},
+  {"chapter":"Delta Xi","school":"Shenandoah University","city_state":"Winchester, VA","airport":"IAD","reimbursement":370,"comments":""},
+  {"chapter":"Delta Omicron","school":"Wilkes University","city_state":"Wilkes-Barre, PA","airport":"AVP","reimbursement":490,"comments":""},
+  {"chapter":"Delta Rho","school":"Nova Southeastern University","city_state":"Ft. Lauderdale, FL","airport":"FLL","reimbursement":332,"comments":""},
+  {"chapter":"Delta Sigma","school":"Midwestern University at Glendale","city_state":"Glendale, AZ","airport":"PHX","reimbursement":368,"comments":""},
+  {"chapter":"Delta Tau","school":"Roseman University of Health Sciences","city_state":"Henderson, NV","airport":"LAS","reimbursement":377,"comments":""},
+  {"chapter":"Delta Upsilon","school":"Palm Beach Atlantic University","city_state":"West Palm Beach, FL","airport":"PBI","reimbursement":332,"comments":""},
+  {"chapter":"Delta Phi","school":"University of California San Diego","city_state":"La Jolla, CA","airport":"SAN","reimbursement":327,"comments":""},
+  {"chapter":"Delta Chi","school":"University of New England","city_state":"Portland, ME","airport":"PWM","reimbursement":406,"comments":""},
+  {"chapter":"Delta Psi","school":"University of Minnesota Duluth","city_state":"Duluth, MN","airport":"DLH","reimbursement":371,"comments":""},
+  {"chapter":"Delta Omega","school":"South University","city_state":"Savannah, GA","airport":"SAV","reimbursement":336,"comments":""},
+  {"chapter":"Epsilon Beta","school":"University of Incarnate Word","city_state":"San Antonio, TX","airport":"SAT","reimbursement":279,"comments":""},
+  {"chapter":"Epsilon Gamma","school":"Western University of Health Sciences","city_state":"Pomona, CA","airport":"ONT","reimbursement":375,"comments":""},
+  {"chapter":"Epsilon Delta","school":"University of Appalachia","city_state":"Oakwood, VA","airport":"TRI","reimbursement":537,"comments":""},
+  {"chapter":"Epsilon Epsilon","school":"Texas A&M Health Science Center","city_state":"Kingsville, TX","airport":"CRP","reimbursement":349,"comments":""},
+  {"chapter":"Epsilon Zeta","school":"East Tennessee State University","city_state":"Johnson City, TN","airport":"TRI","reimbursement":537,"comments":""},
+  {"chapter":"Epsilon Eta","school":"LECOM Bradenton School of Pharmacy","city_state":"Bradenton, FL","airport":"SRQ","reimbursement":308,"comments":""},
+  {"chapter":"Epsilon Theta","school":"Sullivan University","city_state":"Louisville, KY","airport":"SDF","reimbursement":336,"comments":""},
+  {"chapter":"Epsilon Kappa","school":"Belmont University","city_state":"Nashville, TN","airport":"BNA","reimbursement":307,"comments":""},
+  {"chapter":"Epsilon Lambda","school":"Lipscomb University","city_state":"Nashville, TN","airport":"BNA","reimbursement":307,"comments":""},
+  {"chapter":"Epsilon Mu","school":"University of Florida Orlando","city_state":"Orlando, FL","airport":"MCO","reimbursement":371,"comments":""},
+  {"chapter":"Epsilon Nu","school":"University of Maryland Eastern Shore","city_state":"Princess Anne, MD","airport":"SBY","reimbursement":636,"comments":""},
+  {"chapter":"Epsilon Xi","school":"Pacific University","city_state":"Hillsboro, OR","airport":"PDX","reimbursement":320,"comments":""},
+  {"chapter":"Epsilon Upsilon","school":"Roosevelt University","city_state":"Schaumburg, IL","airport":"ORD","reimbursement":225,"comments":""},
+  {"chapter":"Epsilon Chi","school":"University of Utah","city_state":"Salt Lake City, UT","airport":"SLC","reimbursement":312,"comments":""},
+  {"chapter":"Epsilon Psi","school":"University of Hawaii at Hilo","city_state":"Hilo, HI","airport":"ITO","reimbursement":635,"comments":""},
+  {"chapter":"Epsilon Omega","school":"Rosalind Franklin University","city_state":"North Chicago, IL","airport":"ORD","reimbursement":225,"comments":""},
+  {"chapter":"Zeta Gamma","school":"University of Florida Jacksonville","city_state":"Jacksonville, FL","airport":"JAX","reimbursement":338,"comments":""},
+  {"chapter":"Zeta Delta","school":"University of South Florida","city_state":"Tampa, FL","airport":"TPA","reimbursement":298,"comments":""},
+  {"chapter":"Zeta Epsilon","school":"Northeast Ohio Medical University","city_state":"Rootstown, OH","airport":"CLE","reimbursement":377,"comments":""},
+  {"chapter":"Zeta Zeta","school":"Touro University","city_state":"New York, NY","airport":"LGA","reimbursement":363,"comments":""},
+  {"chapter":"Zeta Eta","school":"Regis University","city_state":"Denver, CO","airport":"DEN","reimbursement":253,"comments":""},
+  {"chapter":"Zeta Theta","school":"Concordia University","city_state":"Mequon, WI","airport":"MKE","reimbursement":417,"comments":""},
+  {"chapter":"Zeta Kappa","school":"Marshall University","city_state":"Huntington, WV","airport":"HTS","reimbursement":509,"comments":""},
+  {"chapter":"Zeta Lambda","school":"University of North Texas Health Sciences","city_state":"Fort Worth, TX","airport":"DFW","reimbursement":0,"comments":"Host location is DFW, DAL"},
+  {"chapter":"Zeta Mu","school":"University of Missouri Kansas City in Springfield","city_state":"Springfield, MO","airport":"SGF","reimbursement":485,"comments":""},
+  {"chapter":"Zeta Xi","school":"South College","city_state":"Knoxville, TN","airport":"TSY","reimbursement":328,"comments":""},
+  {"chapter":"Zeta Omicron","school":"Roseman University of Health Sciences","city_state":"South Jordan, UT","airport":"SLC","reimbursement":312,"comments":""},
+  {"chapter":"Zeta Pi","school":"St. John's University","city_state":"Queens, NY","airport":"LGA","reimbursement":363,"comments":""},
+  {"chapter":"Zeta Rho","school":"Philadelphia College of Osteopathic Medicine - Georgia","city_state":"Suwanee, GA","airport":"ATL","reimbursement":331,"comments":""},
+  {"chapter":"Zeta Tau","school":"Chapman University","city_state":"Irvine, CA","airport":"SNA","reimbursement":437,"comments":""},
+  {"chapter":"Zeta Upsilon","school":"Union University","city_state":"Jackson, TN","airport":"BNA","reimbursement":307,"comments":""},
+  {"chapter":"Zeta Phi","school":"Larkin University","city_state":"Miami, FL","airport":"MIA","reimbursement":425,"comments":""},
+  {"chapter":"Eta Beta","school":"Texas Tech Dallas","city_state":"Dallas, TX","airport":"DFW, DAL","reimbursement":0,"comments":"Host location is DFW, DAL"},
+  {"chapter":"Mu Omicron Pi","school":"Wayne State University","city_state":"Detroit, MI","airport":"DTW","reimbursement":399,"comments":""}
+];
+
+// ── State
+let sortCol = 'chapter', sortDir = 'asc';
+let data = [...RAW_DATA];
+
+// ── Build state dropdown
+const states = [...new Set(RAW_DATA.map(r => {
+  const parts = r.city_state.split(',');
+  return parts.length > 1 ? parts[parts.length - 1].trim() : r.city_state.trim();
+}))].sort();
+const stateFilter = document.getElementById('stateFilter');
+states.forEach(s => {
+  const o = document.createElement('option');
+  o.value = s; o.textContent = s;
+  stateFilter.appendChild(o);
+});
+
+// ── Helpers
+function fmt(n) { return n === 0 ? '—' : '$' + n.toLocaleString(); }
+function stateOf(row) {
+  const p = row.city_state.split(',');
+  return p.length > 1 ? p[p.length - 1].trim() : row.city_state.trim();
+}
+function reimbClass(r) {
+  if (r === 0) return 'reimb-zero';
+  if (r >= 500) return 'reimb-high';
+  if (r <= 300) return 'reimb-low';
+  return 'reimb-mid';
+}
+
+// ── Render
+function render() {
+  const q   = document.getElementById('searchInput').value.toLowerCase().trim();
+  const st  = stateFilter.value;
+  const mn  = parseFloat(document.getElementById('minAmt').value) || 0;
+  const mx  = parseFloat(document.getElementById('maxAmt').value) || Infinity;
+  const ss  = document.getElementById('sortSelect').value;
+
+  // Apply sort-select dropdown override
+  if (ss) {
+    const [col, dir] = ss.split('-');
+    sortCol = col === 'reimb' ? 'reimb' : col;
+    sortDir = dir;
+    updateHeaderClasses();
+  }
+
+  let filtered = RAW_DATA.filter(r => {
+    const haystack = [r.chapter, r.school, r.city_state, r.airport, r.comments].join(' ').toLowerCase();
+    if (q && !haystack.includes(q)) return false;
+    if (st && stateOf(r) !== st) return false;
+    if (r.reimbursement < mn) return false;
+    if (r.reimbursement > mx) return false;
+    return true;
+  });
+
+  // Sort
+  filtered.sort((a, b) => {
+    let av, bv;
+    if (sortCol === 'reimb') { av = a.reimbursement; bv = b.reimbursement; }
+    else if (sortCol === 'chapter') { av = a.chapter; bv = b.chapter; }
+    else if (sortCol === 'school')  { av = a.school;  bv = b.school; }
+    else if (sortCol === 'city')    { av = a.city_state; bv = b.city_state; }
+    else if (sortCol === 'airport') { av = a.airport; bv = b.airport; }
+    if (av < bv) return sortDir === 'asc' ? -1 : 1;
+    if (av > bv) return sortDir === 'asc' ?  1 : -1;
+    return 0;
+  });
+
+  // Build rows
+  const tbody = document.getElementById('tableBody');
+  if (filtered.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6">
+      <div class="no-results">
+        <div class="icon">🔍</div>
+        <p>No chapters match your filters. Try adjusting your search.</p>
+      </div>
+    </td></tr>`;
+  } else {
+    tbody.innerHTML = filtered.map(r => {
+      const rc = reimbClass(r.reimbursement);
+      const reimbDisplay = r.reimbursement === 0
+        ? `<span class="${rc}">Not eligible (host)</span>`
+        : `<span class="${rc}">${fmt(r.reimbursement)}</span>`;
+      const comment = r.comments ? `<span class="comment-pill">⚑ ${r.comments}</span>` : '';
+      return `<tr>
+        <td class="chapter">${r.chapter}</td>
+        <td class="school">${r.school}</td>
+        <td class="city">${r.city_state}</td>
+        <td class="airport"><span class="airport-badge">${r.airport}</span></td>
+        <td class="reimb">${reimbDisplay}</td>
+        <td>${comment}</td>
+      </tr>`;
+    }).join('');
+  }
+
+  // Stats
+  const eligible = filtered.filter(r => r.reimbursement > 0);
+  const total = filtered.reduce((s, r) => s + r.reimbursement, 0);
+  const avg   = eligible.length ? Math.round(total / eligible.length) : 0;
+  const max   = eligible.length ? Math.max(...eligible.map(r => r.reimbursement)) : 0;
+
+  document.getElementById('statTotal').textContent   = RAW_DATA.length;
+  document.getElementById('statShowing').textContent = filtered.length;
+  document.getElementById('statAvg').textContent     = eligible.length ? fmt(avg) : '—';
+  document.getElementById('statSum').textContent     = total > 0 ? '$' + total.toLocaleString() : '—';
+  document.getElementById('statMax').textContent     = max > 0 ? fmt(max) : '—';
+
+  // Result info
+  document.getElementById('resultInfo').innerHTML =
+    filtered.length === RAW_DATA.length
+      ? `Showing all <strong>${RAW_DATA.length}</strong> chapters`
+      : `Showing <strong>${filtered.length}</strong> of ${RAW_DATA.length} chapters`;
+}
+
+// ── Header sort click
+function updateHeaderClasses() {
+  document.querySelectorAll('thead th').forEach(th => {
+    th.classList.remove('sorted-asc', 'sorted-desc');
+    if (th.dataset.col === sortCol) {
+      th.classList.add(sortDir === 'asc' ? 'sorted-asc' : 'sorted-desc');
+    }
+  });
+}
+
+document.querySelectorAll('thead th[data-col]').forEach(th => {
+  th.addEventListener('click', () => {
+    const col = th.dataset.col;
+    if (sortCol === col) { sortDir = sortDir === 'asc' ? 'desc' : 'asc'; }
+    else { sortCol = col; sortDir = 'asc'; }
+    document.getElementById('sortSelect').value = '';
+    updateHeaderClasses();
+    render();
+  });
+});
+
+// ── Listeners
+['searchInput','stateFilter','minAmt','maxAmt','sortSelect'].forEach(id => {
+  document.getElementById(id).addEventListener('input', render);
+});
+
+function resetFilters() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('stateFilter').value = '';
+  document.getElementById('minAmt').value = '';
+  document.getElementById('maxAmt').value = '';
+  document.getElementById('sortSelect').value = '';
+  sortCol = 'chapter'; sortDir = 'asc';
+  updateHeaderClasses();
+  render();
+}
+
+// ── Init
+updateHeaderClasses();
+render();
+</script>
+</body>
+</html>
