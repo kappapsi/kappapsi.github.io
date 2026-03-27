@@ -36,40 +36,65 @@
 
   .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
-  /* ─── HERO (60vh + EQUAL BUTTONS) ─── */
-.hero {
-  background: var(--deep-charcoal);
-  position: relative;
-  height: 60vh; 
-  max-height: 600px; /* Add this cap */
-  min-height: 500px; /* Keep your floor */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: var(--white);
-  overflow: hidden;
-}
+  /* ─── HERO ─── */
+  .hero {
+    background: #f5f2ee;
+    position: relative;
+    height: 60vh;
+    max-height: 600px;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--text-dark);
+    overflow: hidden;
+  }
 
+  /* Subtle diagonal line texture */
   .hero::before {
     content: '';
     position: absolute;
     inset: 0;
-    background-image: 
-      linear-gradient(30deg, rgba(255, 82, 82, 0.04) 12%, transparent 12.5%, transparent 87%, rgba(255, 82, 82, 0.04) 87.5%, rgba(255, 82, 82, 0.04)),
-      linear-gradient(150deg, rgba(255, 82, 82, 0.04) 12%, transparent 12.5%, transparent 87%, rgba(255, 82, 82, 0.04) 87.5%, rgba(255, 82, 82, 0.04)),
-      linear-gradient(60deg, rgba(69, 90, 100, 0.08) 25%, transparent 25.5%, transparent 75%, rgba(69, 90, 100, 0.08) 75%, rgba(69, 90, 100, 0.08));
-    background-size: 80px 140px;
+    background-image:
+      repeating-linear-gradient(
+        -52deg,
+        transparent,
+        transparent 38px,
+        rgba(206, 17, 38, 0.045) 38px,
+        rgba(206, 17, 38, 0.045) 39px
+      ),
+      repeating-linear-gradient(
+        38deg,
+        transparent,
+        transparent 76px,
+        rgba(69, 90, 100, 0.04) 76px,
+        rgba(69, 90, 100, 0.04) 77px
+      );
     z-index: 1;
   }
 
+  /* Scarlet top bar */
   .hero::after {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
-    height: 6px;
+    height: 5px;
     background: var(--scarlet);
+    z-index: 3;
+  }
+
+  /* Warm radial glow centered behind logo */
+  .hero-glow {
+    position: absolute;
+    top: 40%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 560px;
+    height: 360px;
+    background: radial-gradient(ellipse at center, rgba(206,17,38,0.08) 0%, transparent 70%);
     z-index: 2;
+    pointer-events: none;
+    border-radius: 50%;
   }
 
   .hero-content { position: relative; z-index: 5; max-width: 1000px; padding: 0 20px; }
@@ -79,25 +104,29 @@
     font-weight: 700;
     letter-spacing: 0.5em;
     text-transform: uppercase;
-    color: var(--scarlet-accessible);
-    margin-bottom: 20px;
+    color: var(--scarlet);
+    margin-bottom: 18px;
   }
 
-  .greek-letters {
-    font-family: 'Cinzel', serif;
-    font-size: clamp(70px, 14vw, 120px);
-    line-height: 1;
-    margin-bottom: 15px;
+  /* Event logo replacing ΚΨ */
+  .hero-logo {
+    display: block;
+    margin: 0 auto 10px;
+    max-width: 300px;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 3px 14px rgba(0,0,0,0.13));
   }
 
   .hero-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(45px, 8vw, 85px);
+    font-size: clamp(38px, 7vw, 72px);
     font-weight: 300;
-    margin-bottom: 35px;
+    margin-bottom: 32px;
+    color: var(--text-dark);
   }
 
-  .hero-title em { color: var(--scarlet-accessible); font-style: italic; }
+  .hero-title em { color: var(--scarlet); font-style: italic; }
 
   .hero-cta-group {
     display: flex;
@@ -120,7 +149,7 @@
     font-size: 15px;
   }
 
-  .hero-cta:hover { background: var(--white); color: var(--scarlet); border-color: var(--white); }
+  .hero-cta:hover { background: var(--text-dark); color: var(--white); border-color: var(--text-dark); }
 
   /* ─── SECTION BASICS ─── */
   section { padding: 90px 0; }
@@ -175,6 +204,7 @@
 
   @media (max-width: 768px) {
     .hero { height: auto; padding: 100px 0; }
+    .hero-logo { max-width: 220px; }
     .hero-cta-group { flex-direction: column; width: 100%; max-width: 320px; margin: 0 auto; }
     .schedule-day { grid-template-columns: 1fr; gap: 15px; }
     .hotel-grid { grid-template-columns: 1fr; }
@@ -184,9 +214,10 @@
 <body>
 
 <section class="hero">
+  <div class="hero-glow"></div>
   <div class="hero-content">
     <p class="hero-eyebrow">62nd Grand Council Convention</p>
-    <div class="greek-letters">ΚΨ</div>
+    <img class="hero-logo" src="62nd GCC Logo no bg.png" alt="62nd GCC — Powered by Purpose · Dallas, TX · July 29–August 2, 2026" />
     <h1 class="hero-title"><em>Powered by</em> Purpose</h1>
 
     <div id="registration-notice" style="margin-top: 20px; padding: 15px; border: 1px solid var(--scarlet-accessible); background: rgba(206, 17, 38, 0.1); border-radius: 4px;">
@@ -355,7 +386,7 @@
         <div class="rate-row"><span>1–2 Guests</span> <span class="rate-price">$199</span></div>
         <div class="rate-row"><span>3 Guests</span> <span class="rate-price">$224</span></div>
         <div class="rate-row"><span>4 Guests</span> <span class="rate-price">$249</span></div>
-        <p>Group Code: G-KAPZ  |  For suites, send inquiries to GrandViceRegent@kappapsi.org.</p>
+        <p>Group Code: G-KAPZ  |  For suites, send inquiries to <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="165164777872407f7573447371737862567d7766667766657f38796471">[email&#160;protected]</a>.</p>
         <a href="https://www.hyatt.com/shop/rooms/dfwrd?location=Hyatt%20Regency%20Dallas&checkinDate=2026-07-29&checkoutDate=2026-08-02&accessibilityCheck=false&rooms=1&adults=1&kids=0&corp_id=G-KAPZ" style="display:inline-block; margin-top:25px; background:var(--cadet-gray); color:white; padding:15px 30px; text-decoration:none; font-size:15px; font-weight:600; text-transform:uppercase;" target="_blank">Book Official Room Block</a>
       </div>
       <div style="background: var(--cadet-gray); color: white; padding: 45px;">
@@ -424,7 +455,7 @@
 </footer>-->
 
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   window.addEventListener('load', function() {
     // 1. Get data from the URL of the iframe itself
     const params = new URLSearchParams(window.location.search);
@@ -469,15 +500,4 @@
 
   if (viewType === 'buttons') {
     // If URL has ?view=buttons, show buttons and hide notice
-    buttonsElement.style.display = 'flex';
-    noticeElement.style.display = 'none';
-  } else {
-    // Otherwise, show the notice and hide buttons
-    noticeElement.style.display = 'block';
-    buttonsElement.style.display = 'none';
-  }
-  
-</script>
-
-</body>
-</html>
+    buttonsElement.style.display = 'fl
