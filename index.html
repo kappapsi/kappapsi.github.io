@@ -22,10 +22,7 @@
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  /* height:auto ensures body/html never artificially constrain scrollHeight */
   html { scroll-behavior: smooth; height: auto; min-height: 0; }
-
   body {
     font-family: 'DM Sans', sans-serif;
     background: var(--light-gray);
@@ -39,47 +36,24 @@
   .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
   /* ─── HERO ─── */
-  /* Fixed px height instead of vh — vh is unreliable inside iframes */
-  /* overflow:hidden removed — it can clip content from scrollHeight */
   .hero {
-    background: #f5f2ee;
+    background: url('hero_background.png') center center / cover no-repeat;
     position: relative;
-    height: 700px;
+    height: 650px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    color: var(--text-dark);
+    color: var(--white);
   }
 
+  /* Subtle dark overlay for text legibility */
   .hero::before {
     content: '';
     position: absolute;
     inset: 0;
-    background-image:
-      repeating-linear-gradient(-52deg, transparent, transparent 38px, rgba(206,17,38,0.045) 38px, rgba(206,17,38,0.045) 39px),
-      repeating-linear-gradient(38deg, transparent, transparent 76px, rgba(69,90,100,0.04) 76px, rgba(69,90,100,0.04) 77px);
+    background: rgba(0, 0, 0, 0.25);
     z-index: 1;
-  }
-
-  .hero::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 5px;
-    background: var(--scarlet);
-    z-index: 3;
-  }
-
-  .hero-glow {
-    position: absolute;
-    top: 40%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 560px; height: 360px;
-    background: radial-gradient(ellipse at center, rgba(206,17,38,0.08) 0%, transparent 70%);
-    z-index: 2;
-    pointer-events: none;
-    border-radius: 50%;
   }
 
   .hero-content { position: relative; z-index: 5; max-width: 1000px; padding: 0 20px; }
@@ -89,7 +63,7 @@
     font-weight: 700;
     letter-spacing: 0.5em;
     text-transform: uppercase;
-    color: var(--scarlet);
+    color: rgba(255, 255, 255, 0.85);
     margin-bottom: 18px;
   }
 
@@ -99,7 +73,7 @@
     max-width: 300px;
     width: 100%;
     height: auto;
-    filter: drop-shadow(0 3px 14px rgba(0,0,0,0.13));
+    filter: drop-shadow(0 3px 20px rgba(0,0,0,0.4));
   }
 
   .hero-title {
@@ -107,26 +81,26 @@
     font-size: clamp(38px, 7vw, 72px);
     font-weight: 300;
     margin-bottom: 32px;
-    color: var(--text-dark);
+    color: var(--white);
   }
-  .hero-title em { color: var(--scarlet); font-style: italic; }
+  .hero-title em { color: rgba(255,255,255,0.9); font-style: italic; }
 
   .hero-cta-group { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
 
   .hero-cta {
     display: inline-block;
-    background: var(--scarlet);
-    color: var(--white);
+    background: var(--white);
+    color: var(--scarlet);
     padding: 20px 40px;
     text-decoration: none;
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     transition: 0.3s;
-    border: 2px solid var(--scarlet);
+    border: 2px solid var(--white);
     font-size: 15px;
   }
-  .hero-cta:hover { background: var(--text-dark); color: var(--white); border-color: var(--text-dark); }
+  .hero-cta:hover { background: transparent; color: var(--white); border-color: var(--white); }
 
   /* ─── SECTIONS ─── */
   section { padding: 90px 0; }
@@ -170,7 +144,7 @@
   .tag.highlight { background: var(--scarlet); color: white; border-left: none; font-weight: 600; }
 
   @media (max-width: 768px) {
-    .hero { height: auto; min-height: 500px; padding: 100px 0; }
+    .hero { height: auto; min-height: 650px; padding: 100px 0; }
     .hero-logo { max-width: 220px; }
     .hero-cta-group { flex-direction: column; width: 100%; max-width: 320px; margin: 0 auto; }
     .schedule-day { grid-template-columns: 1fr; gap: 15px; }
@@ -182,13 +156,12 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-glow"></div>
   <div class="hero-content">
     <p class="hero-eyebrow">62nd Grand Council Convention</p>
     <img class="hero-logo" src="62nd GCC Logo no bg.png" alt="62nd GCC — Powered by Purpose · Dallas, TX · July 29–August 2, 2026" />
     <h1 class="hero-title"><em>Powered by</em> Purpose</h1>
 
-    <div id="registration-notice" style="margin-top:20px;padding:15px;border:1px solid var(--scarlet-accessible);background:rgba(206,17,38,0.1);border-radius:4px;">
+    <div id="registration-notice" style="margin-top:20px;padding:15px;border:1px solid rgba(255,255,255,0.5);background:rgba(0,0,0,0.3);border-radius:4px;">
       <p style="font-size:18px;font-weight:600;color:var(--white);letter-spacing:0.05em;">READY TO REGISTER?</p>
       <p style="font-size:16px;color:var(--white);opacity:0.9;">Please use the registration buttons located directly <strong>above</strong> this window.</p>
     </div>
