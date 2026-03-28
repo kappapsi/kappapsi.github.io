@@ -7,10 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-
-  /* Hide both by default to prevent flickering */
   #registration-notice, #registration-buttons { display: none; }
-  
+
   :root {
     --scarlet: #ce1126;
     --scarlet-accessible: #ff5252;
@@ -24,6 +22,8 @@
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* height:auto ensures body/html never artificially constrain scrollHeight */
   html { scroll-behavior: smooth; height: auto; min-height: 0; }
 
   body {
@@ -39,6 +39,8 @@
   .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
   /* ─── HERO ─── */
+  /* Fixed px height instead of vh — vh is unreliable inside iframes */
+  /* overflow:hidden removed — it can clip content from scrollHeight */
   .hero {
     background: #f5f2ee;
     position: relative;
@@ -55,20 +57,8 @@
     position: absolute;
     inset: 0;
     background-image:
-      repeating-linear-gradient(
-        -52deg,
-        transparent,
-        transparent 38px,
-        rgba(206, 17, 38, 0.045) 38px,
-        rgba(206, 17, 38, 0.045) 39px
-      ),
-      repeating-linear-gradient(
-        38deg,
-        transparent,
-        transparent 76px,
-        rgba(69, 90, 100, 0.04) 76px,
-        rgba(69, 90, 100, 0.04) 77px
-      );
+      repeating-linear-gradient(-52deg, transparent, transparent 38px, rgba(206,17,38,0.045) 38px, rgba(206,17,38,0.045) 39px),
+      repeating-linear-gradient(38deg, transparent, transparent 76px, rgba(69,90,100,0.04) 76px, rgba(69,90,100,0.04) 77px);
     z-index: 1;
   }
 
@@ -85,8 +75,7 @@
     position: absolute;
     top: 40%; left: 50%;
     transform: translate(-50%, -50%);
-    width: 560px;
-    height: 360px;
+    width: 560px; height: 360px;
     background: radial-gradient(ellipse at center, rgba(206,17,38,0.08) 0%, transparent 70%);
     z-index: 2;
     pointer-events: none;
@@ -120,15 +109,9 @@
     margin-bottom: 32px;
     color: var(--text-dark);
   }
-
   .hero-title em { color: var(--scarlet); font-style: italic; }
 
-  .hero-cta-group {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
+  .hero-cta-group { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
 
   .hero-cta {
     display: inline-block;
@@ -143,10 +126,9 @@
     border: 2px solid var(--scarlet);
     font-size: 15px;
   }
-
   .hero-cta:hover { background: var(--text-dark); color: var(--white); border-color: var(--text-dark); }
 
-  /* ─── SECTION BASICS ─── */
+  /* ─── SECTIONS ─── */
   section { padding: 90px 0; }
   .section-label { color: var(--scarlet); font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; font-size: 14px; margin-bottom: 12px; display: block; }
   .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(38px, 6vw, 60px); line-height: 1.1; margin-bottom: 24px; }
@@ -155,19 +137,12 @@
   /* ─── TOOLKIT ─── */
   .toolkit-section { background: var(--light-gray); }
   .toolkit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 35px; }
-  .toolkit-card {
-    background: var(--white);
-    padding: 30px;
-    border: 1px solid #ddd;
-    transition: 0.3s;
-    text-decoration: none;
-    color: inherit;
-  }
+  .toolkit-card { background: var(--white); padding: 30px; border: 1px solid #ddd; transition: 0.3s; text-decoration: none; color: inherit; display: block; }
   .toolkit-card:hover { border-color: var(--scarlet); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
   .toolkit-card h3 { font-size: 24px; margin-bottom: 10px; color: var(--scarlet); }
   .toolkit-card p { font-size: 17px; color: var(--text-muted); }
 
-  /* ─── REGISTRATION ─── */
+  /* ─── PRICING ─── */
   .pricing-section { background: var(--white); }
   .pricing-table { width: 100%; border-collapse: collapse; margin-top: 25px; }
   .pricing-table th { text-align: left; padding: 14px 18px; border-bottom: 3px solid var(--scarlet); font-size: 14px; text-transform: uppercase; color: var(--cadet-gray); }
@@ -194,9 +169,6 @@
   .tag { display: inline-block; background: #eef2f3; padding: 8px 16px; font-size: 16px; border-radius: 4px; margin: 5px; border-left: 3px solid var(--cadet-gray); }
   .tag.highlight { background: var(--scarlet); color: white; border-left: none; font-weight: 600; }
 
-  footer { background: var(--deep-charcoal); color: var(--white); padding: 70px 0; text-align: center; font-size: 16px; }
-  .footer-logo { font-family: 'Cinzel'; font-size: 38px; color: var(--scarlet-accessible); margin-bottom: 15px; }
-
   @media (max-width: 768px) {
     .hero { height: auto; min-height: 500px; padding: 100px 0; }
     .hero-logo { max-width: 220px; }
@@ -208,6 +180,7 @@
 </head>
 <body>
 
+<!-- HERO -->
 <section class="hero">
   <div class="hero-glow"></div>
   <div class="hero-content">
@@ -215,13 +188,9 @@
     <img class="hero-logo" src="62nd GCC Logo no bg.png" alt="62nd GCC — Powered by Purpose · Dallas, TX · July 29–August 2, 2026" />
     <h1 class="hero-title"><em>Powered by</em> Purpose</h1>
 
-    <div id="registration-notice" style="margin-top: 20px; padding: 15px; border: 1px solid var(--scarlet-accessible); background: rgba(206, 17, 38, 0.1); border-radius: 4px;">
-      <p style="font-size: 18px; font-weight: 600; color: var(--white); letter-spacing: 0.05em;">
-        READY TO REGISTER?
-      </p>
-      <p style="font-size: 16px; color: var(--white); opacity: 0.9;">
-        Please use the registration buttons located directly <strong>above</strong> this window.
-      </p>
+    <div id="registration-notice" style="margin-top:20px;padding:15px;border:1px solid var(--scarlet-accessible);background:rgba(206,17,38,0.1);border-radius:4px;">
+      <p style="font-size:18px;font-weight:600;color:var(--white);letter-spacing:0.05em;">READY TO REGISTER?</p>
+      <p style="font-size:16px;color:var(--white);opacity:0.9;">Please use the registration buttons located directly <strong>above</strong> this window.</p>
     </div>
 
     <div id="registration-buttons" class="hero-cta-group">
@@ -230,41 +199,32 @@
   </div>
 </section>
 
+<!-- TOOLKIT -->
 <section class="toolkit-section">
   <div class="container">
     <span class="section-label">Convention Toolkit</span>
     <h2 class="section-title">Essential <em>Materials</em></h2>
-    <p style="max-width: 700px; color: var(--text-muted);">Access the official documents, legislative previews, and planning guides to prepare for GCC 2026.</p>
-    
+    <p style="max-width:700px;color:var(--text-muted);">Access the official documents, legislative previews, and planning guides to prepare for GCC 2026.</p>
     <div class="toolkit-grid">
-
       <a href="GCC62_Guide_Vol2.html" class="toolkit-card">
-        <div>
-          <h3>Guide to GCC</h3>
-          <p>First GCC? Read all about the details and what to expect from Joe Nardolilo, your Grand Vice Regent.</p>
-        </div>
-        <span class="toolkit-link">Download PDF →</span>
+        <h3>Guide to GCC</h3>
+        <p>First GCC? Read all about the details and what to expect from Joe Nardolilo, your Grand Vice Regent.</p>
+        <span class="toolkit-link">Download PDF &rarr;</span>
       </a>
-
       <a href="https://form.jotform.com/kappa_psi/sponsors" class="toolkit-card" target="_blank">
-        <div>
-          <h3>Sponsorship Inquiry</h3>
-          <p>Want to sponsor GCC and see your name at the event? Fill out the form to inquire about opportunities.</p>
-        </div>
-        <span class="toolkit-link">Open Form →</span>
+        <h3>Sponsorship Inquiry</h3>
+        <p>Want to sponsor GCC and see your name at the event? Fill out the form to inquire about opportunities.</p>
+        <span class="toolkit-link">Open Form &rarr;</span>
       </a>
-
       <a href="#" class="toolkit-card">
-        <div>
-          <h3>Legislative Proposals (Coming Soon)</h3>
-          <p>Submit legislative proposals to the legislative committee for review of adoption.</p>
-        </div>
+        <h3>Legislative Proposals (Coming Soon)</h3>
+        <p>Submit legislative proposals to the legislative committee for review of adoption.</p>
       </a>
-
     </div>
   </div>
 </section>
 
+<!-- REGISTRATION -->
 <section id="registration" class="pricing-section">
   <div class="container">
     <span class="section-label">Attendee Access</span>
@@ -303,77 +263,66 @@
   </div>
 </section>
 
+<!-- REIMBURSEMENT -->
 <section class="reimb-section">
   <div class="container">
-    <span class="section-label" style="color: var(--scarlet);">Chapter Support</span>
-    <h2 class="section-title" style="color: white;">Collegiate <em>Reimbursement</em></h2>
+    <span class="section-label" style="color:var(--scarlet);">Chapter Support</span>
+    <h2 class="section-title" style="color:white;">Collegiate <em>Reimbursement</em></h2>
     <div class="reimb-grid">
-      
       <div class="reimb-card">
         <p>The GCC Fund ensures representation by covering roundtrip airfare for <strong>one official delegate</strong> from every Collegiate Chapter.</p>
       </div>
-
-      <a href="gcc_reimbursement_table.html" class="reimb-card" style="text-decoration: none; display: block;">
-        <p style="color: white;">Explore your chapter's specific reimbursement rate.</p>
-        <span style="color: white;" class="toolkit-link">View Reimbursement Rates →</span>
+      <a href="gcc_reimbursement_table.html" class="reimb-card" style="text-decoration:none;display:block;">
+        <p style="color:white;">Explore your chapter's specific reimbursement rate.</p>
+        <span style="color:white;" class="toolkit-link">View Reimbursement Rates &rarr;</span>
       </a>
-
       <div class="reimb-card">
         <p>Travel may be booked into <strong>Dallas/Ft. Worth (DFW)</strong> or <strong>Dallas Love Field (DAL)</strong>.</p>
       </div>
-
     </div>
-
-    <div style="text-align: center; margin-top: 2rem;">
-      <a href="gcc_reimbursement_table.html" style="
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        background-color: var(--scarlet);
-        color: white;
-        font-weight: 700;
-        text-decoration: none;
-        padding: 0.85rem 1.75rem;
-        border-radius: 6px;
-        font-size: 1rem;
-        letter-spacing: 0.02em;
-        transition: opacity 0.2s ease;
-      " onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
-        View Full Reimbursement Rates Table →
+    <div style="text-align:center;margin-top:2rem;">
+      <a href="gcc_reimbursement_table.html"
+         onmouseover="this.style.opacity='0.85'"
+         onmouseout="this.style.opacity='1'"
+         style="display:inline-flex;align-items:center;gap:0.5rem;background-color:var(--scarlet);color:white;font-weight:700;text-decoration:none;padding:0.85rem 1.75rem;border-radius:6px;font-size:1rem;letter-spacing:0.02em;transition:opacity 0.2s ease;">
+        View Full Reimbursement Rates Table &rarr;
       </a>
     </div>
-
   </div>
 </section>
 
+<!-- HOTEL -->
 <section id="hotel">
   <div class="container">
     <span class="section-label">Accommodations</span>
     <h2 class="section-title">Hotel &amp; <em>Room Block</em></h2>
     <div class="hotel-grid">
       <div class="hotel-card">
-        <h3 style="font-family: 'Cormorant Garamond'; font-size: 32px; color: var(--scarlet);">Hyatt Regency Dallas</h3>
-        <p style="color: var(--text-muted); font-size: 16px; margin-bottom: 25px;">300 Reunion Boulevard, Dallas, TX 75207</p>
-        <div class="rate-row"><span>1–2 Guests</span> <span class="rate-price">$199</span></div>
-        <div class="rate-row"><span>3 Guests</span> <span class="rate-price">$224</span></div>
-        <div class="rate-row"><span>4 Guests</span> <span class="rate-price">$249</span></div>
-        <p>Group Code: G-KAPZ  |  For suites, send inquiries to <a href="/cdn-cgi/l/email-protection#e2858181a2898392928392918bcc8d9085"><span class="__cf_email__" data-cfemail="c8afabab88a3a9b8b8a9b8bba1e6a7baaf">[email&#160;protected]</span></a>.</p>
-        <a href="https://www.hyatt.com/shop/rooms/dfwrd?location=Hyatt%20Regency%20Dallas&checkinDate=2026-07-29&checkoutDate=2026-08-02&accessibilityCheck=false&rooms=1&adults=1&kids=0&corp_id=G-KAPZ" style="display:inline-block; margin-top:25px; background:var(--cadet-gray); color:white; padding:15px 30px; text-decoration:none; font-size:15px; font-weight:600; text-transform:uppercase;" target="_blank">Book Official Room Block</a>
+        <h3 style="font-family:'Cormorant Garamond';font-size:32px;color:var(--scarlet);">Hyatt Regency Dallas</h3>
+        <p style="color:var(--text-muted);font-size:16px;margin-bottom:25px;">300 Reunion Boulevard, Dallas, TX 75207</p>
+        <div class="rate-row"><span>1&ndash;2 Guests</span><span class="rate-price">$199</span></div>
+        <div class="rate-row"><span>3 Guests</span><span class="rate-price">$224</span></div>
+        <div class="rate-row"><span>4 Guests</span><span class="rate-price">$249</span></div>
+        <p style="margin-top:15px;">Group Code: G-KAPZ &nbsp;|&nbsp; For suites, send inquiries to GrandViceRegent@kappapsi.org.</p>
+        <a href="https://www.hyatt.com/shop/rooms/dfwrd?location=Hyatt%20Regency%20Dallas&checkinDate=2026-07-29&checkoutDate=2026-08-02&accessibilityCheck=false&rooms=1&adults=1&kids=0&corp_id=G-KAPZ"
+           style="display:inline-block;margin-top:25px;background:var(--cadet-gray);color:white;padding:15px 30px;text-decoration:none;font-size:15px;font-weight:600;text-transform:uppercase;"
+           target="_blank">Book Official Room Block</a>
       </div>
-      <div style="background: var(--cadet-gray); color: white; padding: 45px;">
-        <h3 style="margin-bottom: 20px; font-size: 24px;">Explore Dallas</h3>
-        <ul style="list-style: none; font-size: 18px;">
-          <li style="margin-bottom: 12px;">→ Reunion Tower Geo-Deck</li>
-          <li style="margin-bottom: 12px;">→ Klyde Warren Park</li>
-          <li style="margin-bottom: 12px;">→ Deep Ellum District</li>
-          <li style="margin-bottom: 12px;">→ Sixth Floor Museum</li>
+      <div style="background:var(--cadet-gray);color:white;padding:45px;">
+        <h3 style="margin-bottom:20px;font-size:24px;">Explore Dallas</h3>
+        <ul style="list-style:none;font-size:18px;">
+          <li style="margin-bottom:12px;">&rarr; Reunion Tower Geo-Deck</li>
+          <li style="margin-bottom:12px;">&rarr; Klyde Warren Park</li>
+          <li style="margin-bottom:12px;">&rarr; Deep Ellum District</li>
+          <li style="margin-bottom:12px;">&rarr; Sixth Floor Museum</li>
         </ul>
       </div>
     </div>
   </div>
 </section>
 
-<section id="schedule" class="pricing-section" style="border-top: 1px solid #ddd;">
+<!-- SCHEDULE -->
+<section id="schedule" class="pricing-section" style="border-top:1px solid #ddd;">
   <div class="container">
     <span class="section-label">Agenda</span>
     <h2 class="section-title">Convention <em>Schedule</em></h2>
@@ -417,9 +366,8 @@
   </div>
 </section>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  // ─── AUTO-HEIGHT SIZING (FIXED) ───────────────────────────────────────────
-  // Defined at top level so it's always in scope
+<script>
+  // ─── AUTO-HEIGHT SIZING ───────────────────────────────────────────────────
   function sendHeight() {
     var height = Math.max(
       document.body.scrollHeight,
@@ -430,18 +378,14 @@
     window.parent.postMessage({ type: 'resize', height: height }, '*');
   }
 
-  // Fire on resize
   window.addEventListener('resize', sendHeight);
 
-  // Fire after full load (images, fonts, etc.)
   window.addEventListener('load', function () {
     sendHeight();
-    // Re-send after short delays to catch late-rendering fonts/images
     setTimeout(sendHeight, 300);
     setTimeout(sendHeight, 1000);
   });
 
-  // Most robust: observe any change in body's rendered size
   if (typeof ResizeObserver !== 'undefined') {
     var ro = new ResizeObserver(sendHeight);
     ro.observe(document.body);
@@ -450,7 +394,6 @@
   // ─── REGISTRATION BUTTON URL BUILDER ─────────────────────────────────────
   window.addEventListener('load', function () {
     var params = new URLSearchParams(window.location.search);
-
     var userData = {
       fn:    params.get('fn')    || '',
       ln:    params.get('ln')    || '',
@@ -462,29 +405,36 @@
     };
 
     var colBtn = document.querySelector('.hero-cta-group a:first-child');
-
     if (colBtn && userData.fn) {
-      var baseUrl = "https://kappapsi.my.salesforce-sites.com/pmtx/evt__conf_reg?id=a2QQh000001vaCf";
-      var newUrl  = baseUrl
-        + "&fn="    + encodeURIComponent(userData.fn)
-        + "&ln="    + encodeURIComponent(userData.ln)
-        + "&email=" + encodeURIComponent(userData.email)
-        + "&addr="  + encodeURIComponent(userData.addr1)
-        + "&city="  + encodeURIComponent(userData.city)
-        + "&state=" + encodeURIComponent(userData.state)
-        + "&zip="   + encodeURIComponent(userData.zip);
-
+      var baseUrl = 'https://kappapsi.my.salesforce-sites.com/pmtx/evt__conf_reg?id=a2QQh000001vaCf';
+      var newUrl = baseUrl
+        + '&fn='    + encodeURIComponent(userData.fn)
+        + '&ln='    + encodeURIComponent(userData.ln)
+        + '&email=' + encodeURIComponent(userData.email)
+        + '&addr='  + encodeURIComponent(userData.addr1)
+        + '&city='  + encodeURIComponent(userData.city)
+        + '&state=' + encodeURIComponent(userData.state)
+        + '&zip='   + encodeURIComponent(userData.zip);
       colBtn.setAttribute('href', newUrl);
     }
   });
 
   // ─── REGISTRATION NOTICE / BUTTONS TOGGLE ────────────────────────────────
   (function () {
-    var urlParams   = new URLSearchParams(window.location.search);
-    var viewType    = urlParams.get('view');
-    var noticeEl    = document.getElementById('registration-notice');
-    var buttonsEl   = document.getElementById('registration-buttons');
+    var urlParams = new URLSearchParams(window.location.search);
+    var viewType  = urlParams.get('view');
+    var noticeEl  = document.getElementById('registration-notice');
+    var buttonsEl = document.getElementById('registration-buttons');
 
     if (viewType === 'buttons') {
       buttonsEl.style.display = 'flex';
-      noticeEl.style.displ
+      noticeEl.style.display  = 'none';
+    } else if (viewType === 'notice') {
+      noticeEl.style.display  = 'block';
+      buttonsEl.style.display = 'none';
+    }
+  })();
+</script>
+
+</body>
+</html>
