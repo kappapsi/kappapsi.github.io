@@ -31,7 +31,7 @@
     background: var(--light-gray);
     color: var(--text-dark);
     line-height: 1.6;
-    font-size: 19px; /* Increased base size */
+    font-size: 19px;
   }
 
   .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
@@ -51,7 +51,6 @@
     overflow: hidden;
   }
 
-  /* Subtle diagonal line texture */
   .hero::before {
     content: '';
     position: absolute;
@@ -74,7 +73,6 @@
     z-index: 1;
   }
 
-  /* Scarlet top bar */
   .hero::after {
     content: '';
     position: absolute;
@@ -84,7 +82,6 @@
     z-index: 3;
   }
 
-  /* Warm radial glow centered behind logo */
   .hero-glow {
     position: absolute;
     top: 40%; left: 50%;
@@ -108,7 +105,6 @@
     margin-bottom: 18px;
   }
 
-  /* Event logo replacing ΚΨ */
   .hero-logo {
     display: block;
     margin: 0 auto 10px;
@@ -157,7 +153,7 @@
   .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(38px, 6vw, 60px); line-height: 1.1; margin-bottom: 24px; }
   .section-title em { color: var(--scarlet); font-style: italic; }
 
-  /* ─── TOOLKIT (TOP PRIORITY) ─── */
+  /* ─── TOOLKIT ─── */
   .toolkit-section { background: var(--light-gray); }
   .toolkit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 35px; }
   .toolkit-card {
@@ -172,7 +168,7 @@
   .toolkit-card h3 { font-size: 24px; margin-bottom: 10px; color: var(--scarlet); }
   .toolkit-card p { font-size: 17px; color: var(--text-muted); }
 
-  /* ─── COMPACT REGISTRATION ─── */
+  /* ─── REGISTRATION ─── */
   .pricing-section { background: var(--white); }
   .pricing-table { width: 100%; border-collapse: collapse; margin-top: 25px; }
   .pricing-table th { text-align: left; padding: 14px 18px; border-bottom: 3px solid var(--scarlet); font-size: 14px; text-transform: uppercase; color: var(--cadet-gray); }
@@ -264,32 +260,8 @@
           <h3>Legislative Proposals (Coming Soon)</h3>
           <p>Submit legislative proposals to the legislative committee for review of adoption.</p>
         </div>
-        <!--<span class="toolkit-link">Open Form →</span>-->
       </a>
 
-      <!--<a href="#" class="toolkit-card">
-        <div>
-          <h3>Legislative Preview</h3>
-          <p>Review proposed changes to the Constitution and By-Laws ahead of the business sessions.</p>
-        </div>
-        <span class="toolkit-link">Download PDF →</span>
-      </a>-->
-
-      <!--<a href="#" class="toolkit-card">
-        <div>
-          <h3>Chapter Budgeting Guide</h3>
-          <p>Fundraising templates and travel cost worksheets to help collegiate chapters plan their trip.</p>
-        </div>
-        <span class="toolkit-link">View Guide →</span>
-      </a>-->
-
-      <!--<a href="#" class="toolkit-card">
-        <div>
-          <h3>Poster Guidelines</h3>
-          <p>Information on submission deadlines and formatting for the GCC Poster Sessions.</p>
-        </div>
-        <span class="toolkit-link">Learn More →</span>
-      </a>-->
     </div>
   </div>
 </section>
@@ -386,7 +358,7 @@
         <div class="rate-row"><span>1–2 Guests</span> <span class="rate-price">$199</span></div>
         <div class="rate-row"><span>3 Guests</span> <span class="rate-price">$224</span></div>
         <div class="rate-row"><span>4 Guests</span> <span class="rate-price">$249</span></div>
-        <p>Group Code: G-KAPZ  |  For suites, send inquiries to <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="165164777872407f7573447371737862567d7766667766657f38796471">[email&#160;protected]</a>.</p>
+        <p>Group Code: G-KAPZ  |  For suites, send inquiries to <a href="mailto:gcc@kappapsi.org">gcc@kappapsi.org</a>.</p>
         <a href="https://www.hyatt.com/shop/rooms/dfwrd?location=Hyatt%20Regency%20Dallas&checkinDate=2026-07-29&checkoutDate=2026-08-02&accessibilityCheck=false&rooms=1&adults=1&kids=0&corp_id=G-KAPZ" style="display:inline-block; margin-top:25px; background:var(--cadet-gray); color:white; padding:15px 30px; text-decoration:none; font-size:15px; font-weight:600; text-transform:uppercase;" target="_blank">Book Official Room Block</a>
       </div>
       <div style="background: var(--cadet-gray); color: white; padding: 45px;">
@@ -446,58 +418,79 @@
   </div>
 </section>
 
-<!--<footer>
-  <div class="container">
-    <div class="footer-logo">ΚΨ</div>
-    <p style="text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em;">Kappa Psi Pharmaceutical Fraternity</p>
-    <p style="opacity: 0.7;">© 2026 62nd Grand Council Convention · Dallas, Texas</p>
-  </div>
-</footer>-->
+<script>
+  // ─── AUTO-HEIGHT SIZING (FIXED) ───────────────────────────────────────────
+  // Defined at top level so it's always in scope
+  function sendHeight() {
+    var height = document.body.scrollHeight;
+    window.parent.postMessage({ type: 'resize', height: height }, '*');
+  }
 
+  // Fire on resize
+  window.addEventListener('resize', sendHeight);
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  window.addEventListener('load', function() {
-    // 1. Get data from the URL of the iframe itself
-    const params = new URLSearchParams(window.location.search);
-    
-    // 2. Map the URL parameters to your variables
-    const userData = {
-      fn: params.get('fn') || '',
-      ln: params.get('ln') || '',
+  // Fire after full load (images, fonts, etc.)
+  window.addEventListener('load', function () {
+    sendHeight();
+    // Re-send after short delays to catch late-rendering fonts/images
+    setTimeout(sendHeight, 300);
+    setTimeout(sendHeight, 1000);
+  });
+
+  // Most robust: observe any change in body's rendered size
+  if (typeof ResizeObserver !== 'undefined') {
+    var ro = new ResizeObserver(sendHeight);
+    ro.observe(document.body);
+  }
+
+  // ─── REGISTRATION BUTTON URL BUILDER ─────────────────────────────────────
+  window.addEventListener('load', function () {
+    var params = new URLSearchParams(window.location.search);
+
+    var userData = {
+      fn:    params.get('fn')    || '',
+      ln:    params.get('ln')    || '',
       email: params.get('email') || '',
       addr1: params.get('addr1') || '',
-      city: params.get('city') || '',
+      city:  params.get('city')  || '',
       state: params.get('state') || '',
-      zip: params.get('zip') || ''
+      zip:   params.get('zip')   || ''
     };
 
-    // 3. Find the Collegiate Registration button
-    const colBtn = document.querySelector('.hero-cta-group a:first-child');
+    var colBtn = document.querySelector('.hero-cta-group a:first-child');
 
     if (colBtn && userData.fn) {
-      // 4. Reconstruct the Salesforce URL with the real data
-      const baseUrl = "https://kappapsi.my.salesforce-sites.com/pmtx/evt__conf_reg?id=a2QQh000001vaCf";
-      const newUrl = `${baseUrl}&fn=${userData.fn}&ln=${userData.ln}&email=${userData.email}&addr=${userData.addr1}&city=${userData.city}&state=${userData.state}&zip=${userData.zip}`;
-      
+      var baseUrl = "https://kappapsi.my.salesforce-sites.com/pmtx/evt__conf_reg?id=a2QQh000001vaCf";
+      var newUrl  = baseUrl
+        + "&fn="    + encodeURIComponent(userData.fn)
+        + "&ln="    + encodeURIComponent(userData.ln)
+        + "&email=" + encodeURIComponent(userData.email)
+        + "&addr="  + encodeURIComponent(userData.addr1)
+        + "&city="  + encodeURIComponent(userData.city)
+        + "&state=" + encodeURIComponent(userData.state)
+        + "&zip="   + encodeURIComponent(userData.zip);
+
       colBtn.setAttribute('href', newUrl);
     }
   });
 
-  // Keep your existing resize script here...
-  function sendHeight() {
-    const height = document.body.scrollHeight;
-    window.parent.postMessage({ 'type': 'resize', 'height': height }, '*');
-  }
-  window.addEventListener('load', sendHeight);
-  window.addEventListener('resize', sendHeight);
+  // ─── REGISTRATION NOTICE / BUTTONS TOGGLE ────────────────────────────────
+  (function () {
+    var urlParams   = new URLSearchParams(window.location.search);
+    var viewType    = urlParams.get('view');
+    var noticeEl    = document.getElementById('registration-notice');
+    var buttonsEl   = document.getElementById('registration-buttons');
 
-// This script runs as soon as the page loads
-  const urlParams = new URLSearchParams(window.location.search);
-  const viewType = urlParams.get('view');
+    if (viewType === 'buttons') {
+      buttonsEl.style.display = 'flex';
+      noticeEl.style.display  = 'none';
+    } else if (viewType === 'notice') {
+      noticeEl.style.display  = 'block';
+      buttonsEl.style.display = 'none';
+    }
+    // If neither param is set, both remain hidden (default)
+  })();
+</script>
 
-  const noticeElement = document.getElementById('registration-notice');
-  const buttonsElement = document.getElementById('registration-buttons');
-
-  if (viewType === 'buttons') {
-    // If URL has ?view=buttons, show buttons and hide notice
-    buttonsElement.style.display = 'fl
+</body>
+</html>
