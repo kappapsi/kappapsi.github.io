@@ -37,7 +37,7 @@
 
   /* ─── HERO ─── */
   .hero {
-    background: url('hero_bg.png') center center / cover no-repeat;
+    background: url('hero_background.png') center center / cover no-repeat;
     position: relative;
     height: 650px;
     display: flex;
@@ -46,8 +46,6 @@
     text-align: center;
     color: var(--white);
   }
-
-  /* Subtle dark overlay for text legibility */
   .hero::before {
     content: '';
     position: absolute;
@@ -55,9 +53,7 @@
     background: rgba(0, 0, 0, 0.25);
     z-index: 1;
   }
-
   .hero-content { position: relative; z-index: 5; max-width: 1000px; padding: 0 20px; }
-
   .hero-eyebrow {
     font-size: 14px;
     font-weight: 700;
@@ -66,7 +62,6 @@
     color: rgba(255, 255, 255, 0.85);
     margin-bottom: 18px;
   }
-
   .hero-logo {
     display: block;
     margin: 0 auto 10px;
@@ -75,7 +70,6 @@
     height: auto;
     filter: drop-shadow(0 3px 20px rgba(0,0,0,0.4));
   }
-
   .hero-title {
     font-family: 'Cormorant Garamond', serif;
     font-size: clamp(38px, 7vw, 72px);
@@ -84,9 +78,7 @@
     color: var(--white);
   }
   .hero-title em { color: rgba(255,255,255,0.9); font-style: italic; }
-
   .hero-cta-group { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
-
   .hero-cta {
     display: inline-block;
     background: var(--white);
@@ -120,7 +112,7 @@
   .pricing-section { background: var(--white); }
   .pricing-table { width: 100%; border-collapse: collapse; margin-top: 25px; }
   .pricing-table th { text-align: left; padding: 14px 18px; border-bottom: 3px solid var(--scarlet); font-size: 14px; text-transform: uppercase; color: var(--cadet-gray); }
-  .pricing-table td { padding: 18px 18px; border-bottom: 1px solid #eee; }
+  .pricing-table td { padding: 18px; border-bottom: 1px solid #eee; }
   .pricing-table td strong { font-size: 21px; }
   .price { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 700; }
   .price.early { color: var(--scarlet); }
@@ -134,7 +126,7 @@
   /* ─── HOTEL ─── */
   .hotel-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 48px; margin-top: 40px; }
   .hotel-card { background: var(--white); padding: 45px; border-top: 5px solid var(--scarlet); box-shadow: 0 12px 40px rgba(0,0,0,0.05); }
-  .rate-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #eee; font-size: 18px; }
+  .rate-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee; font-size: 18px; }
   .rate-price { color: var(--scarlet); font-weight: 700; font-size: 26px; font-family: 'Cormorant Garamond', serif; }
 
   /* ─── SCHEDULE ─── */
@@ -143,12 +135,64 @@
   .tag { display: inline-block; background: #eef2f3; padding: 8px 16px; font-size: 16px; border-radius: 4px; margin: 5px; border-left: 3px solid var(--cadet-gray); }
   .tag.highlight { background: var(--scarlet); color: white; border-left: none; font-weight: 600; }
 
+  /* ─── MOBILE ─── */
   @media (max-width: 768px) {
+    section { padding: 60px 0; }
+
+    /* Hero */
     .hero { height: auto; min-height: 650px; padding: 100px 0; }
     .hero-logo { max-width: 220px; }
     .hero-cta-group { flex-direction: column; width: 100%; max-width: 320px; margin: 0 auto; }
+
+    /* Schedule */
     .schedule-day { grid-template-columns: 1fr; gap: 15px; }
-    .hotel-grid { grid-template-columns: 1fr; }
+
+    /* Hotel */
+    .hotel-grid {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .hotel-card {
+      padding: 28px 20px;
+      border-top: 5px solid var(--scarlet);
+    }
+    .hotel-card h3 {
+      font-size: 24px !important;
+    }
+    .rate-row {
+      font-size: 16px;
+      padding: 10px 0;
+    }
+    .rate-price {
+      font-size: 22px !important;
+    }
+    .hotel-card > a {
+      display: block;
+      text-align: center;
+      width: 100%;
+    }
+    .hotel-explore {
+      padding: 28px 20px;
+    }
+    .hotel-explore h3 {
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+    .hotel-explore li {
+      font-size: 16px !important;
+      margin-bottom: 10px !important;
+    }
+
+    /* Pricing table */
+    .pricing-table th,
+    .pricing-table td { padding: 12px 10px; }
+    .price { font-size: 22px; }
+    .pricing-table td strong { font-size: 16px; }
+  }
+
+  @media (max-width: 480px) {
+    .pricing-table th:nth-child(3),
+    .pricing-table td:nth-child(3) { display: none; }
   }
 </style>
 </head>
@@ -158,7 +202,7 @@
 <section class="hero">
   <div class="hero-content">
     <p class="hero-eyebrow">62nd Grand Council Convention</p>
-    <img class="hero-logo" src="62nd GCC Logo Small.png" alt="62nd GCC — Powered by Purpose · Dallas, TX · July 29–August 2, 2026" />
+    <img class="hero-logo" src="62nd GCC Logo no bg.png" alt="62nd GCC — Powered by Purpose · Dallas, TX · July 29–August 2, 2026" />
     <h1 class="hero-title"><em>Powered by</em> Purpose</h1>
 
     <div id="registration-notice" style="margin-top:20px;padding:15px;border:1px solid rgba(255,255,255,0.5);background:rgba(0,0,0,0.3);border-radius:4px;">
@@ -270,18 +314,20 @@
     <span class="section-label">Accommodations</span>
     <h2 class="section-title">Hotel &amp; <em>Room Block</em></h2>
     <div class="hotel-grid">
+
       <div class="hotel-card">
         <h3 style="font-family:'Cormorant Garamond';font-size:32px;color:var(--scarlet);">Hyatt Regency Dallas</h3>
         <p style="color:var(--text-muted);font-size:16px;margin-bottom:25px;">300 Reunion Boulevard, Dallas, TX 75207</p>
         <div class="rate-row"><span>1&ndash;2 Guests</span><span class="rate-price">$199</span></div>
         <div class="rate-row"><span>3 Guests</span><span class="rate-price">$224</span></div>
         <div class="rate-row"><span>4 Guests</span><span class="rate-price">$249</span></div>
-        <p style="margin-top:15px;">Group Code: G-KAPZ &nbsp;|&nbsp; For suites, send inquiries to GrandViceRegent@kappapsi.org.</p>
+        <p style="margin-top:15px;font-size:16px;">Group Code: G-KAPZ &nbsp;|&nbsp; For suites, email <a href="mailto:gcc@kappapsi.org">gcc@kappapsi.org</a>.</p>
         <a href="https://www.hyatt.com/shop/rooms/dfwrd?location=Hyatt%20Regency%20Dallas&checkinDate=2026-07-29&checkoutDate=2026-08-02&accessibilityCheck=false&rooms=1&adults=1&kids=0&corp_id=G-KAPZ"
            style="display:inline-block;margin-top:25px;background:var(--cadet-gray);color:white;padding:15px 30px;text-decoration:none;font-size:15px;font-weight:600;text-transform:uppercase;"
            target="_blank">Book Official Room Block</a>
       </div>
-      <div style="background:var(--cadet-gray);color:white;padding:45px;">
+
+      <div class="hotel-explore" style="background:var(--cadet-gray);color:white;padding:45px;">
         <h3 style="margin-bottom:20px;font-size:24px;">Explore Dallas</h3>
         <ul style="list-style:none;font-size:18px;">
           <li style="margin-bottom:12px;">&rarr; Reunion Tower Geo-Deck</li>
@@ -290,6 +336,7 @@
           <li style="margin-bottom:12px;">&rarr; Sixth Floor Museum</li>
         </ul>
       </div>
+
     </div>
   </div>
 </section>
@@ -376,7 +423,6 @@
       state: params.get('state') || '',
       zip:   params.get('zip')   || ''
     };
-
     var colBtn = document.querySelector('.hero-cta-group a:first-child');
     if (colBtn && userData.fn) {
       var baseUrl = 'https://kappapsi.my.salesforce-sites.com/pmtx/evt__conf_reg?id=a2QQh000001vaCf';
@@ -398,7 +444,6 @@
     var viewType  = urlParams.get('view');
     var noticeEl  = document.getElementById('registration-notice');
     var buttonsEl = document.getElementById('registration-buttons');
-
     if (viewType === 'buttons') {
       buttonsEl.style.display = 'flex';
       noticeEl.style.display  = 'none';
