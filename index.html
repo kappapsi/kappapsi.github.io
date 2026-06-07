@@ -129,6 +129,102 @@
   .rate-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee; font-size: 18px; }
   .rate-price { color: var(--scarlet); font-weight: 700; font-size: 26px; font-family: 'Cormorant Garamond', serif; }
 
+  /* ─── TRAVEL ─── */
+  .travel-section { background: var(--light-gray); }
+  .travel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; margin-top: 40px; }
+  .travel-card {
+    background: var(--white);
+    border: 1px solid #ddd;
+    border-top: 5px solid var(--scarlet);
+    padding: 36px;
+    transition: box-shadow 0.3s;
+  }
+  .travel-card:hover { box-shadow: 0 10px 30px rgba(0,0,0,0.07); }
+  .travel-card-icon {
+    font-size: 32px;
+    margin-bottom: 14px;
+    display: block;
+  }
+  .travel-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    color: var(--scarlet);
+    margin-bottom: 16px;
+  }
+  .travel-card p {
+    font-size: 17px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+  .travel-card p:last-child { margin-bottom: 0; }
+
+  /* Airport pill badges */
+  .airport-badges { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+  .airport-badge {
+    background: var(--scarlet);
+    color: white;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.06em;
+    padding: 8px 18px;
+    border-radius: 4px;
+    display: inline-block;
+  }
+  .airport-badge.secondary {
+    background: var(--cadet-gray);
+  }
+
+  /* Transport option rows */
+  .transport-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 14px 0;
+    border-bottom: 1px solid #eee;
+    gap: 16px;
+  }
+  .transport-option:last-child { border-bottom: none; padding-bottom: 0; }
+  .transport-label { font-weight: 600; font-size: 16px; color: var(--text-dark); }
+  .transport-desc { font-size: 15px; color: var(--text-muted); margin-top: 3px; }
+  .transport-cost {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--scarlet);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Parking card */
+  .parking-options { margin-top: 8px; }
+  .parking-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 17px;
+  }
+  .parking-row:last-child { border-bottom: none; }
+  .parking-price { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700; color: var(--scarlet); }
+  .parking-note { font-size: 14px; color: var(--text-muted); font-weight: 400; margin-left: 6px; }
+
+  /* Arrival callout */
+  .arrival-callout {
+    background: var(--scarlet);
+    color: white;
+    border-radius: 6px;
+    padding: 20px 26px;
+    margin-top: 40px;
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+  }
+  .arrival-callout-icon { font-size: 28px; flex-shrink: 0; margin-top: 2px; }
+  .arrival-callout p { font-size: 17px; line-height: 1.6; margin: 0; }
+  .arrival-callout strong { font-weight: 700; }
+
   /* ─── SCHEDULE ─── */
   .schedule-day { display: grid; grid-template-columns: 220px 1fr; gap: 40px; padding: 35px 0; border-bottom: 1px solid #ddd; }
   .day-label { font-weight: 700; color: var(--scarlet); font-size: 16px; text-transform: uppercase; }
@@ -188,6 +284,13 @@
     .pricing-table td { padding: 12px 10px; }
     .price { font-size: 22px; }
     .pricing-table td strong { font-size: 16px; }
+
+    /* Travel */
+    .travel-grid { grid-template-columns: 1fr; }
+    .travel-card { padding: 26px 20px; }
+    .arrival-callout { flex-direction: column; gap: 10px; }
+    .transport-cost { font-size: 19px; }
+    .parking-price { font-size: 22px; }
   }
 
   @media (max-width: 480px) {
@@ -354,6 +457,97 @@
       </div>
 
     </div>
+  </div>
+</section>
+
+<!-- TRAVEL & GETTING THERE -->
+<section id="travel" class="travel-section">
+  <div class="container">
+    <span class="section-label">Getting There</span>
+    <h2 class="section-title">Flights, Transit <em>&amp; Parking</em></h2>
+    <p style="max-width:720px;color:var(--text-muted);margin-bottom:8px;">Dallas is served by two convenient airports. Plan your arrival early — members are encouraged to be in Dallas by <strong>5:00 PM CT on Wednesday, July 29</strong> for General Session I and the Opening Reception.</p>
+
+    <div class="travel-grid">
+
+      <!-- Airports card -->
+      <div class="travel-card">
+        <span class="travel-card-icon">✈️</span>
+        <h3>Airports</h3>
+        <div class="airport-badges">
+          <span class="airport-badge">DFW</span>
+          <span class="airport-badge secondary">DAL</span>
+        </div>
+        <p>Two airports serve the convention. <strong>Dallas/Fort Worth International (DFW)</strong> is the primary hub with the most connections. <strong>Dallas Love Field (DAL)</strong> is a closer, smaller option — ideal for Southwest travelers.</p>
+        <p style="font-size:15px;">Both airports are eligible for chapter reimbursement. Book early for the best fares.</p>
+      </div>
+
+      <!-- Ground transportation card -->
+      <div class="travel-card">
+        <span class="travel-card-icon">🚕</span>
+        <h3>Airport Transportation</h3>
+
+        <div class="transport-option">
+          <div>
+            <div class="transport-label">Rideshare / Taxi from DFW</div>
+            <div class="transport-desc">Uber, Lyft, or taxi — varies by traffic &amp; demand</div>
+          </div>
+          <div class="transport-cost">$40–$60</div>
+        </div>
+
+        <div class="transport-option">
+          <div>
+            <div class="transport-label">Rideshare / Taxi from DAL</div>
+            <div class="transport-desc">Shorter distance, generally less traffic</div>
+          </div>
+          <div class="transport-cost">$20–$35</div>
+        </div>
+
+        <div class="transport-option">
+          <div>
+            <div class="transport-label">DART Local Day Pass</div>
+            <div class="transport-desc">Dallas Area Rapid Transit — budget-friendly option from DFW</div>
+          </div>
+          <div class="transport-cost">$6/person</div>
+        </div>
+
+        <div class="transport-option">
+          <div>
+            <div class="transport-label">DART Regional Day Pass</div>
+            <div class="transport-desc">Required for travel from DFW; covers Orange Line to hotel</div>
+          </div>
+          <div class="transport-cost">$9/person</div>
+        </div>
+
+        <p style="font-size:15px;margin-top:18px;padding-top:16px;border-top:1px solid #eee;color:var(--text-muted);">
+          <strong style="color:var(--text-dark);">DART directions from DFW:</strong> Take the <strong>Orange Line</strong> from the airport to <strong>West End Station</strong>, then transfer to the Red or Blue Line to <strong>Union Station</strong> — connected to the hotel via an underground concourse.
+        </p>
+      </div>
+
+      <!-- Parking card -->
+      <div class="travel-card">
+        <span class="travel-card-icon">🅿️</span>
+        <h3>Parking at the Hyatt</h3>
+        <p>Driving to Dallas? The Hyatt Regency offers on-site parking with a discounted rate for convention guests.</p>
+        <div class="parking-options">
+          <div class="parking-row">
+            <span>Self-Parking <span class="parking-note">(on-site garage)</span></span>
+            <span class="parking-price">$15<span style="font-size:16px;font-weight:400;color:var(--text-muted);">/night</span></span>
+          </div>
+          <div class="parking-row">
+            <span>Valet Parking</span>
+            <span class="parking-price">$45<span style="font-size:16px;font-weight:400;color:var(--text-muted);">/night</span></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Recommended arrival callout -->
+    <div class="arrival-callout">
+      <div class="arrival-callout-icon">📅</div>
+      <p><strong>Recommended Arrival:</strong> Plan to arrive in Dallas by approximately <strong>5:00 PM Central Time on Wednesday, July 29</strong> to participate in General Session I. The Opening Reception immediately follows. CE sessions and workshops will also be offered earlier that day for those arriving in advance.</p>
+    </div>
+
   </div>
 </section>
 
