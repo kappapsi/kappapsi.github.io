@@ -35,7 +35,7 @@
 
   .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
-  /* ─── HERO ─── */
+  /* HERO */
   .hero {
     background: url('hero_bg.jpg') center center / cover no-repeat;
     position: relative;
@@ -94,13 +94,13 @@
   }
   .hero-cta:hover { background: transparent; color: var(--white); border-color: var(--white); }
 
-  /* ─── SECTIONS ─── */
+  /* SECTIONS */
   section { padding: 90px 0; }
   .section-label { color: var(--scarlet); font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; font-size: 14px; margin-bottom: 12px; display: block; }
   .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(38px, 6vw, 60px); line-height: 1.1; margin-bottom: 24px; }
   .section-title em { color: var(--scarlet); font-style: italic; }
 
-  /* ─── TOOLKIT ─── */
+  /* TOOLKIT */
   .toolkit-section { background: var(--light-gray); }
   .toolkit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 35px; }
   .toolkit-card { background: var(--white); padding: 30px; border: 1px solid #ddd; transition: 0.3s; text-decoration: none; color: inherit; display: block; }
@@ -108,7 +108,7 @@
   .toolkit-card h3 { font-size: 24px; margin-bottom: 10px; color: var(--scarlet); }
   .toolkit-card p { font-size: 17px; color: var(--text-muted); }
 
-  /* ─── PRICING ─── */
+  /* PRICING */
   .pricing-section { background: var(--white); }
   .pricing-table { width: 100%; border-collapse: collapse; margin-top: 25px; }
   .pricing-table th { text-align: left; padding: 14px 18px; border-bottom: 3px solid var(--scarlet); font-size: 14px; text-transform: uppercase; color: var(--cadet-gray); }
@@ -116,20 +116,21 @@
   .pricing-table td strong { font-size: 21px; }
   .price { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 700; }
   .price.early { color: var(--scarlet); }
+  .price.struck { text-decoration: line-through; color: #aaa; font-size: 26px; }
 
-  /* ─── REIMBURSEMENT ─── */
+  /* REIMBURSEMENT */
   .reimb-section { background: var(--rich-gray); color: var(--white); }
   .reimb-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 35px; }
   .reimb-card { background: rgba(255,255,255,0.05); padding: 35px; border-left: 4px solid var(--scarlet-accessible); }
   .reimb-card p { font-size: 18px; line-height: 1.7; }
 
-  /* ─── HOTEL ─── */
+  /* HOTEL */
   .hotel-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 48px; margin-top: 40px; }
   .hotel-card { background: var(--white); padding: 45px; border-top: 5px solid var(--scarlet); box-shadow: 0 12px 40px rgba(0,0,0,0.05); }
   .rate-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee; font-size: 18px; }
   .rate-price { color: var(--scarlet); font-weight: 700; font-size: 26px; font-family: 'Cormorant Garamond', serif; }
 
-  /* ─── TRAVEL ─── */
+  /* TRAVEL */
   .travel-section { background: var(--light-gray); }
   .travel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; margin-top: 40px; }
   .travel-card {
@@ -140,152 +141,57 @@
     transition: box-shadow 0.3s;
   }
   .travel-card:hover { box-shadow: 0 10px 30px rgba(0,0,0,0.07); }
-  .travel-card-icon {
-    font-size: 32px;
-    margin-bottom: 14px;
-    display: block;
-  }
-  .travel-card h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 28px;
-    color: var(--scarlet);
-    margin-bottom: 16px;
-  }
-  .travel-card p {
-    font-size: 17px;
-    color: var(--text-muted);
-    line-height: 1.7;
-    margin-bottom: 12px;
-  }
+  .travel-card-icon { font-size: 32px; margin-bottom: 14px; display: block; }
+  .travel-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: var(--scarlet); margin-bottom: 16px; }
+  .travel-card p { font-size: 17px; color: var(--text-muted); line-height: 1.7; margin-bottom: 12px; }
   .travel-card p:last-child { margin-bottom: 0; }
 
-  /* Airport pill badges */
   .airport-badges { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
-  .airport-badge {
-    background: var(--scarlet);
-    color: white;
-    font-weight: 700;
-    font-size: 15px;
-    letter-spacing: 0.06em;
-    padding: 8px 18px;
-    border-radius: 4px;
-    display: inline-block;
-  }
-  .airport-badge.secondary {
-    background: var(--cadet-gray);
-  }
+  .airport-badge { background: var(--scarlet); color: white; font-weight: 700; font-size: 15px; letter-spacing: 0.06em; padding: 8px 18px; border-radius: 4px; display: inline-block; }
+  .airport-badge.secondary { background: var(--cadet-gray); }
 
-  /* Transport option rows */
-  .transport-option {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 14px 0;
-    border-bottom: 1px solid #eee;
-    gap: 16px;
-  }
+  .transport-option { display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid #eee; gap: 16px; }
   .transport-option:last-child { border-bottom: none; padding-bottom: 0; }
   .transport-label { font-weight: 600; font-size: 16px; color: var(--text-dark); }
   .transport-desc { font-size: 15px; color: var(--text-muted); margin-top: 3px; }
-  .transport-cost {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--scarlet);
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
+  .transport-cost { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700; color: var(--scarlet); white-space: nowrap; flex-shrink: 0; }
 
-  /* Parking card */
   .parking-options { margin-top: 8px; }
-  .parking-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 14px 0;
-    border-bottom: 1px solid #eee;
-    font-size: 17px;
-  }
+  .parking-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid #eee; font-size: 17px; }
   .parking-row:last-child { border-bottom: none; }
   .parking-price { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700; color: var(--scarlet); }
   .parking-note { font-size: 14px; color: var(--text-muted); font-weight: 400; margin-left: 6px; }
 
-  /* Arrival callout */
-  .arrival-callout {
-    background: var(--scarlet);
-    color: white;
-    border-radius: 6px;
-    padding: 20px 26px;
-    margin-top: 40px;
-    display: flex;
-    align-items: flex-start;
-    gap: 18px;
-  }
+  .arrival-callout { background: var(--scarlet); color: white; border-radius: 6px; padding: 20px 26px; margin-top: 40px; display: flex; align-items: flex-start; gap: 18px; }
   .arrival-callout-icon { font-size: 28px; flex-shrink: 0; margin-top: 2px; }
   .arrival-callout p { font-size: 17px; line-height: 1.6; margin: 0; }
   .arrival-callout strong { font-weight: 700; }
 
-  /* ─── SCHEDULE ─── */
+  /* SCHEDULE */
   .schedule-day { display: grid; grid-template-columns: 220px 1fr; gap: 40px; padding: 35px 0; border-bottom: 1px solid #ddd; }
   .day-label { font-weight: 700; color: var(--scarlet); font-size: 16px; text-transform: uppercase; }
   .tag { display: inline-block; background: #eef2f3; padding: 8px 16px; font-size: 16px; border-radius: 4px; margin: 5px; border-left: 3px solid var(--cadet-gray); }
   .tag.highlight { background: var(--scarlet); color: white; border-left: none; font-weight: 600; }
 
-  /* ─── MOBILE ─── */
+  /* MOBILE */
   @media (max-width: 768px) {
     section { padding: 60px 0; }
-
-    /* Hero */
     .hero { height: auto; min-height: 650px; padding: 100px 0; }
     .hero-logo { max-width: 220px; }
     .hero-cta-group { flex-direction: column; width: 100%; max-width: 320px; margin: 0 auto; }
-
-    /* Schedule */
     .schedule-day { grid-template-columns: 1fr; gap: 15px; }
-
-    /* Hotel */
-    .hotel-grid {
-      grid-template-columns: 1fr;
-      gap: 0;
-    }
-    .hotel-card {
-      padding: 28px 20px;
-      border-top: 5px solid var(--scarlet);
-    }
-    .hotel-card h3 {
-      font-size: 24px !important;
-    }
-    .rate-row {
-      font-size: 16px;
-      padding: 10px 0;
-    }
-    .rate-price {
-      font-size: 22px !important;
-    }
-    .hotel-card > a {
-      display: block;
-      text-align: center;
-      width: 100%;
-    }
-    .hotel-explore {
-      padding: 28px 20px;
-    }
-    .hotel-explore h3 {
-      font-size: 20px;
-      margin-bottom: 16px;
-    }
-    .hotel-explore li {
-      font-size: 16px !important;
-      margin-bottom: 10px !important;
-    }
-
-    /* Pricing table */
-    .pricing-table th,
-    .pricing-table td { padding: 12px 10px; }
+    .hotel-grid { grid-template-columns: 1fr; gap: 0; }
+    .hotel-card { padding: 28px 20px; border-top: 5px solid var(--scarlet); }
+    .hotel-card h3 { font-size: 24px !important; }
+    .rate-row { font-size: 16px; padding: 10px 0; }
+    .rate-price { font-size: 22px !important; }
+    .hotel-card > a { display: block; text-align: center; width: 100%; }
+    .hotel-explore { padding: 28px 20px; }
+    .hotel-explore h3 { font-size: 20px; margin-bottom: 16px; }
+    .hotel-explore li { font-size: 16px !important; margin-bottom: 10px !important; }
+    .pricing-table th, .pricing-table td { padding: 12px 10px; }
     .price { font-size: 22px; }
     .pricing-table td strong { font-size: 16px; }
-
-    /* Travel */
     .travel-grid { grid-template-columns: 1fr; }
     .travel-card { padding: 26px 20px; }
     .arrival-callout { flex-direction: column; gap: 10px; }
@@ -356,6 +262,11 @@
         <p>Customize your communications with your school, college, preceptor or employer to request support or time off to attend GCC!</p>
         <span class="toolkit-link">View Letter &rarr;</span>
       </a>
+      <a href="https://form.jotform.com/kappa_psi/delegates-and-proxies" class="toolkit-card" target="_blank">
+        <h3>Delegate &amp; Proxy Form</h3>
+        <p>Submit your chapter's delegate and proxy designations for official convention business and voting purposes.</p>
+        <span class="toolkit-link">Open Form &rarr;</span>
+      </a>
     </div>
   </div>
 </section>
@@ -376,22 +287,22 @@
       <tbody>
         <tr>
           <td><strong>Collegiate Member</strong></td>
-          <td class="price early">$395</td>
+          <td><span class="price struck">$395</span></td>
           <td class="price">$425</td>
         </tr>
         <tr>
           <td><strong>Graduate Member</strong></td>
-          <td class="price early">$595</td>
+          <td><span class="price struck">$595</span></td>
           <td class="price">$625</td>
         </tr>
         <tr>
           <td><strong>Guest (Age 13+)</strong></td>
-          <td class="price early">$395</td>
+          <td><span class="price struck">$395</span></td>
           <td class="price">$425</td>
         </tr>
         <tr>
           <td><strong>Child (Ages 5-12)</strong></td>
-          <td class="price early">$175</td>
+          <td><span class="price struck">$175</span></td>
           <td class="price">$195</td>
         </tr>
       </tbody>
@@ -469,7 +380,6 @@
 
     <div class="travel-grid">
 
-      <!-- Airports card -->
       <div class="travel-card">
         <span class="travel-card-icon">✈️</span>
         <h3>Airports</h3>
@@ -481,7 +391,6 @@
         <p style="font-size:15px;">Both airports are eligible for chapter reimbursement. Book early for the best fares.</p>
       </div>
 
-      <!-- Ground transportation card -->
       <div class="travel-card">
         <span class="travel-card-icon">🚕</span>
         <h3>Airport Transportation</h3>
@@ -523,7 +432,6 @@
         </p>
       </div>
 
-      <!-- Parking card -->
       <div class="travel-card">
         <span class="travel-card-icon">🅿️</span>
         <h3>Parking at the Hyatt</h3>
@@ -542,7 +450,6 @@
 
     </div>
 
-    <!-- Recommended arrival callout -->
     <div class="arrival-callout">
       <div class="arrival-callout-icon">📅</div>
       <p><strong>Recommended Arrival:</strong> Plan to arrive in Dallas by approximately <strong>5:00 PM Central Time on Wednesday, July 29</strong> to participate in General Session I. The Opening Reception immediately follows. CE sessions and workshops will also be offered earlier that day for those arriving in advance.</p>
@@ -597,7 +504,6 @@
 </section>
 
 <script>
-  // ─── AUTO-HEIGHT SIZING ───────────────────────────────────────────────────
   function sendHeight() {
     var height = Math.max(
       document.body.scrollHeight,
@@ -621,7 +527,6 @@
     ro.observe(document.body);
   }
 
-  // ─── REGISTRATION BUTTON URL BUILDER ─────────────────────────────────────
   window.addEventListener('load', function () {
     var params = new URLSearchParams(window.location.search);
     var userData = {
@@ -648,7 +553,6 @@
     }
   });
 
-  // ─── REGISTRATION NOTICE / BUTTONS TOGGLE ────────────────────────────────
   (function () {
     var urlParams = new URLSearchParams(window.location.search);
     var viewType  = urlParams.get('view');
